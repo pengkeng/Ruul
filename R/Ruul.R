@@ -1,5 +1,4 @@
 Ruul <- function(x, stdopt = 0, simopt = 1) {
-
     if (! requireNamespace("Rcpp", quietly = TRUE)) {
         stop("Please install Rcpp: install.packages('Rcpp')")
     }

@@ -1,3 +1,4 @@
-exportPattern("^[[:alpha:]]+")
+export("Ruul")
+import("Rcpp")
 importFrom("graphics", "lines", "plot.new", "plot.window", "text")
 useDynLib(Ruul)
