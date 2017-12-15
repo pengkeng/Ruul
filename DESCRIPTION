@@ -3,11 +3,10 @@ Type: Package
 Title: Fuzzy Dynamtic Clustering Picture
 Version: 0.1.0
 Author: Tokhta Horqin
-Maintainer: The package maintainer <bwb80@outlook.com>
+Maintainer: Tokhta Horqin <tokhta@outlook.com>
 Description: Fuzzy Dynamtic Clustering Picture.
 License: GPL
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: yes
 Imports: Rcpp
-Packaged: 2017-11-26 12:49:50 UTC; horqin
