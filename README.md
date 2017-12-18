@@ -1,8 +1,8 @@
-`README.md` for version 0.2.1 of Uul.
+`README.md` for version 0.1.0 of Ruul.
 
-## What is Uul? ##
+## What is Ruul? ##
 
-Uul is *Fuzzy* *Dynamtic* *Clustering* *Analysis* *Picture* *Tool* developed by
+Ruul is *Fuzzy* *Dynamtic* *Clustering* *Analysis* *Picture* *Tool* developed by
 Tokhta Horqin at China University of Geosciences in China, and based on 
 模糊数学方法及其应用[M]. 谢季坚, 刘承平. 华中科技大学出版社. 2000
 
@@ -10,7 +10,7 @@ Tokhta Horqin at China University of Geosciences in China, and based on
 
 ## License ##
 
-Uul is free software distributed under the terms of the MIT license.
+Ruul is free software distributed under the terms of the MIT license.
 
 ## Information ##
 
