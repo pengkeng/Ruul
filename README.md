@@ -8,6 +8,17 @@ Tokhta Horqin at China University of Geosciences in China, and based on
 
 "Uul" (pronounced Ah-Goo-La, spelling уул and ᠠᠭᠤᠯᠠ) means "Mountain" in Mongolian.
 
+## Configure ##
+
+The first, source the setting ( Imports: **Rcpp** ):
+
+    export PKG_LIBS=`Rscript -e "Rcpp:::LdFlags()"`
+    export PKG_CXXFLAGS=`Rscript -e "Rcpp:::CxxFlags()"`
+
+The second, build and INSTALL the software:
+
+    R CMD build Ruul && R CMD INSTALL Ruul*.tar.gz
+
 ## License ##
 
 Ruul is free software distributed under the terms of the MIT license.
