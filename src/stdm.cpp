@@ -34,21 +34,31 @@
  *
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "uul.h"
 
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @Synopsis  标准矩阵的创建
+     *
+     * @Param Xstd 创建的标准矩阵
+     * @Param X 输入的数据矩阵
+     * @Param opt 标准矩阵创建的方法
+     *
+     * @Returns   0-矩阵标准化成功，1—矩阵标准化失败，-1—输入数据矩阵存在严重问题
+     */
+    /* ----------------------------------------------------------------------------*/
 _Status matrixStandard (_Matrix &Xstd, _Matrix X, _Integer opt)
 {
     if (X.nrow == 0 || X.ncol == 0) {
-        return _ERROR_;
+        return _FAILTURE_;
     }
     if (Xstd.nrow == 0 || Xstd.ncol == 0) {
-        return _ERROR_;
+        return _FAILTURE_;
     }
     if (Xstd.nrow != X.nrow || Xstd.ncol != X.ncol) {
-        return _ERROR_;
+        return _FAILTURE_;
     }
 
 	if (opt == 0) {
@@ -113,7 +123,7 @@ _Status matrixStandard (_Matrix &Xstd, _Matrix X, _Integer opt)
         }
     } 
     else {
-        return _ERROR_;
+        return _FAILTURE_;
     }
 
     return _SUCCESS_;

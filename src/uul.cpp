@@ -1,13 +1,22 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <math.h>
 #include "uul.h"
 
+/* --------------------------------------------------------------------------*/
+/**
+ * @Synopsis  矩阵的创建
+ *
+ * @Param M 矩阵
+ * @Param nrow 矩阵的行数
+ * @Param ncol 矩阵的列数
+ *
+ * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
+ */
+/* ----------------------------------------------------------------------------*/
 _Status matrixCreate (_Matrix &M, _Integer nrow, _Integer ncol)
 {
     if (nrow <= 0 || ncol <= 0) {
-        return _ERROR_;
+        return _FAILTURE_;
     }
 
     M.nrow = nrow;
@@ -28,17 +37,26 @@ _Status matrixCreate (_Matrix &M, _Integer nrow, _Integer ncol)
     return _SUCCESS_;
 }
 
+/* --------------------------------------------------------------------------*/
+/**
+ * @Synopsis  矩阵的销毁
+ *
+ * @Param M 矩阵
+ *
+ * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
+ */
+/* ----------------------------------------------------------------------------*/
 _Status matrixDestroy (_Matrix &M)
 {
     for (_Integer i = 0; i < M.nrow; i++) {
         free (*(M.ptr + i));
         if (*(M.ptr + i) == NULL) {
-            return _OVERFLOW_;
+            return _FAILTURE_;
         }
     }
     free (M.ptr);
     if (M.ptr == NULL) {
-        return _OVERFLOW_;
+        return _FAILTURE_;
     }
 
     return _SUCCESS_;

@@ -69,73 +69,83 @@
  *
  * \begin{center}
  * $r_{ij} = \frac{2 \sum\limits_{k = 1}^{m}(x_{ik} \wedge x_{jk})}{\sum\limits_{k = 1}^{m} (x_{ik} + x_{jk})}$
- * \end{center}
- *
- * \subsection{几何平均最小法}
- *
- * \begin{center}
- * $r_{ij} = \frac{\sum\limits_{k = 1}^{m} (x_{ik} \wedge x_{jk})}{\sum\limits_{k = 1}^{m} \sqrt{x_{ik} x_{jk}}}$
- * \end{center}
- *
- * \section{距离法}
- *
- * \subsection{直接距离法}
- *
- * \begin{center}
- * $r_{ij} = 1 - cd(x_{i}, x_{j})$.
- * \end{center}
- *
- * 其中$c$为适当选取的参数, 
- * 使$0 \le r_{ij} \le 1$, $d(x_{i}, x_{j})$表示$x_{i}$与$x_{j}$的距离. 
- * 经典的距离有以下三种：
- *
- * \subsection{海明距离}
- *
- * \begin{center}
- * $d(x_{i}, x_{j}) = \sum\limits_{k = 1}^{m} \lvert x_{ik} - x_{jk} \rvert$;
- * \end{center}
- *
- * \subsection{欧几里得距离}
- *
- * \begin{center}
- * $d(x_{i}, x_{j}) = \sqrt{\sum\limits_{k = 1}^{m}(x_{ik} - x_{jk})^{2}}$;
- * \end{center}
- *
- * \subsection{切比雪夫距离}
- *
- * \begin{center}
- * $d(x_{i}, x_{j}) = \vee_{k = 1}^{m} \lvert x_{ik} - x_{jk} \rvert$.
- * \end{center}
- *
- * \section{倒数距离法}
- *
- * $$
- * r_{ij} =
- * \begin{cases}
- * 1,& i = j, \\
- * \frac{M}{d(x_{i}, x_{j})},& i \neq j,
- * \end{cases}
- * $$
- *
- * 其中M为适当选取的参数，使得$0 \le r_{ij} \le 1$.
- *
- */
+* \end{center}
+*
+* \subsection{几何平均最小法}
+*
+* \begin{center}
+* $r_{ij} = \frac{\sum\limits_{k = 1}^{m} (x_{ik} \wedge x_{jk})}{\sum\limits_{k = 1}^{m} \sqrt{x_{ik} x_{jk}}}$
+* \end{center}
+*
+* \section{距离法}
+*
+* \subsection{直接距离法}
+*
+* \begin{center}
+* $r_{ij} = 1 - cd(x_{i}, x_{j})$.
+* \end{center}
+*
+* 其中$c$为适当选取的参数, 
+    * 使$0 \le r_{ij} \le 1$, $d(x_{i}, x_{j})$表示$x_{i}$与$x_{j}$的距离. 
+    * 经典的距离有以下三种：
+    *
+    * \subsection{海明距离}
+    *
+    * \begin{center}
+    * $d(x_{i}, x_{j}) = \sum\limits_{k = 1}^{m} \lvert x_{ik} - x_{jk} \rvert$;
+    * \end{center}
+    *
+    * \subsection{欧几里得距离}
+    *
+    * \begin{center}
+    * $d(x_{i}, x_{j}) = \sqrt{\sum\limits_{k = 1}^{m}(x_{ik} - x_{jk})^{2}}$;
+    * \end{center}
+    *
+    * \subsection{切比雪夫距离}
+    *
+    * \begin{center}
+    * $d(x_{i}, x_{j}) = \vee_{k = 1}^{m} \lvert x_{ik} - x_{jk} \rvert$.
+    * \end{center}
+    *
+    * \section{倒数距离法}
+    *
+    * $$
+    * r_{ij} =
+    * \begin{cases}
+    * 1,& i = j, \\
+              * \frac{M}{d(x_{i}, x_{j})},& i \neq j,
+    * \end{cases}
+    * $$
+    *
+    * 其中M为适当选取的参数，使得$0 \le r_{ij} \le 1$.
+    *
+    */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "uul.h"
 
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @Synopsis  相似矩阵的创建
+     *
+     * @Param R 创建的相似矩阵
+     * @Param X 输入的数据矩阵
+     * @Param opt 相似矩阵创建的方法
+     *
+     * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败，-1—输入数据矩阵存在严重问题
+     */
+    /* ----------------------------------------------------------------------------*/
 _Status matrixSimilar (_Matrix &R, _Matrix X, _Integer opt)
 {
-    if (X.nrow == 0 || X.ncol == 0) {
-        return _ERROR_;
+    if (X.nrow <= 0 || X.ncol <= 0) {
+        return _FAILTURE_;
     }
-    if (R.nrow == 0 || R.ncol == 0) {
-        return _ERROR_;
+    if (R.nrow <= 0 || R.ncol <= 0) {
+        return _FAILTURE_;
     }
     if (R.nrow != X.nrow || R.ncol != X.nrow) {
-        return _ERROR_;
+        return _FAILTURE_;
     }
 
     if (opt == 1) {
@@ -444,7 +454,7 @@ _Status matrixSimilar (_Matrix &R, _Matrix X, _Integer opt)
         }
     } 
     else {
-        return _ERROR_;
+        return _FAILTURE_;
     }
 
     return _SUCCESS_;

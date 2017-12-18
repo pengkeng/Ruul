@@ -16,27 +16,37 @@
  *
  */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "uul.h"
 
+    /* --------------------------------------------------------------------------*/
+    /**
+     * @Synopsis  关系矩阵的合成
+     *
+     * @Param R 合成的关系矩阵
+     * @Param R1 输入的关系矩阵R1
+     * @Param R2 输入的关系矩阵R2
+     *
+     * @Returns   0-矩阵合成成功，1-矩阵合成失败
+     */
+    /* ----------------------------------------------------------------------------*/
 _Status matrixComposite (_Matrix &Rt, _Matrix R1, _Matrix R2)
 {
-    if (R1.nrow == 0 || R1.ncol == 0) {
-        return _ERROR_;
+    if (R1.nrow <= 0 || R1.ncol <= 0) {
+        return _FAILTURE_;
     }
-    if (R2.nrow == 0 || R2.ncol == 0) {
-        return _ERROR_;
+    if (R2.nrow <= 0 || R2.ncol <= 0) {
+        return _FAILTURE_;
     }
-    if (Rt.nrow == 0 || Rt.ncol == 0) {
-        return _ERROR_;
+    if (Rt.nrow <= 0 || Rt.ncol <= 0) {
+        return _FAILTURE_;
     }
     if (R1.nrow != R1.ncol || R2.nrow != R2.ncol || Rt.nrow != Rt.ncol) {
-        return _ERROR_;
+        return _FAILTURE_;
     }
     if (Rt.nrow != R1.nrow || Rt.nrow != R2.nrow) {
-        return _ERROR_;
+        return _FAILTURE_;
     }
 
     _ElemType temp;
