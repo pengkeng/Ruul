@@ -8,7 +8,8 @@
 }
 \arguments{
     \item{x}{
-        the matrix of data.}
+        the matrix of data.
+    }
     \item{stdopt}{
         the style to create standard matrix.
 
@@ -53,7 +54,8 @@
 
         case 15: Hamming exponent distance similarity
 
-        case 16: Chebyshev exponent distance similarity}
+        case 16: Chebyshev exponent distance similarity
+    }
 }
 \description{
     Fuzzy Dynamtic Clustering Picture Maker.
@@ -70,5 +72,5 @@ x <- matrix( c( 1.24,1.72,
                 1.56,2.08, 
                 1.14,1.78 ), 
              ncol = 2, byrow = TRUE )
-Ruul(x, stdopt = 1, simopt = 3)
+Ruul(x, stdopt = 1, simopt = 12)
 }
