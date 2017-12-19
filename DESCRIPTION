@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Tokhta Horqin
 Maintainer: Tokhta Horqin <tokhta@outlook.com>
 Description: Fuzzy Dynamtic Clustering Picture Maker.
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: yes
