@@ -31,6 +31,6 @@ typedef struct {
     _ElemType **ptr;
     int nrow;
     int ncol;
-} _Matrix;
+} *_PMatrix, _Matrix;
 
 #endif /*!uulconf.h*/

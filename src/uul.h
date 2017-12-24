@@ -5,13 +5,15 @@
  * @version 0.1.0
  * @date 2017-11-23
  */
+
 #ifndef UUL_H
 #define UUL_H
-
 #include "uulconf.h"
 
+#ifdef __cplusplus
 extern "C" {
-    
+#endif
+
     /* --------------------------------------------------------------------------*/
     /**
      * @Synopsis  矩阵的创建
@@ -23,7 +25,7 @@ extern "C" {
      * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
      */
     /* ----------------------------------------------------------------------------*/
-    _Status matrixCreate (_Matrix &M, _Integer nrow, _Integer ncol);
+    extern _Status matrixCreate (_PMatrix M, _Integer nrow, _Integer ncol);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -34,7 +36,7 @@ extern "C" {
      * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
      */
     /* ----------------------------------------------------------------------------*/
-    _Status matrixDestroy (_Matrix &M);
+    extern _Status matrixDestroy (_PMatrix M);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -47,7 +49,7 @@ extern "C" {
      * @Returns   0-矩阵合成成功，1-矩阵合成失败
      */
     /* ----------------------------------------------------------------------------*/
-    _Status matrixComposite (_Matrix &Rt, _Matrix R1, _Matrix R2);
+    extern _Status matrixComposite (_PMatrix Rt, _PMatrix R1, _PMatrix R2);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -60,7 +62,7 @@ extern "C" {
      * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败，-1—输入数据矩阵存在严重问题
      */
     /* ----------------------------------------------------------------------------*/
-    _Status matrixSimilar (_Matrix &R, _Matrix X, _Integer opt);
+    extern _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -73,7 +75,10 @@ extern "C" {
      * @Returns   0-矩阵标准化成功，1—矩阵标准化失败，-1—输入数据矩阵存在严重问题
      */
     /* ----------------------------------------------------------------------------*/
-    _Status matrixStandard (_Matrix &Xstd, _Matrix X, _Integer opt);
+    extern _Status matrixStandard (_PMatrix Xstd, _PMatrix X, _Integer opt);
+
+#ifdef __cplusplus
 }
+#endif
 
 #endif /*!uul.h*/
