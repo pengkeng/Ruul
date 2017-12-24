@@ -4,13 +4,13 @@
     Fuzzy Dynamtic Clustering Picture Maker
 }
 \usage{
-    Ruul(x, stdopt = 0, simopt = 1)
+    Ruul(x, scale = 0, dist = 1)
 }
 \arguments{
     \item{x}{
         the matrix of data.
     }
-    \item{stdopt}{
+    \item{scale}{
         the style to create standard matrix.
 
         case 0: unchanged
@@ -21,7 +21,7 @@
 
         case 3: non-liner normalization
     }
-    \item{simopt}{
+    \item{dist}{
         the style to create similar matrix.
 
         case 1: scalar product similarity
@@ -72,5 +72,5 @@ x <- matrix( c( 1.24,1.72,
                 1.56,2.08, 
                 1.14,1.78 ), 
              ncol = 2, byrow = TRUE )
-Ruul(x, stdopt = 1, simopt = 12)
+Ruul(x, scale = 1, dist = 12)
 }

@@ -1,16 +1,24 @@
-Ruul <- function(x, stdopt = 0, simopt = 1) {
+Ruul <- function(x, scale = 0, dist = 1) {
     if (! requireNamespace("Rcpp", quietly = TRUE)) {
         stop("Please install Rcpp: install.packages('Rcpp')")
     }
 
-    if (stdopt > 3 || stdopt < 0) {
-        stop("ERROR! stdopt must be 0, 1, ..., 3.")
+    if (scale > 3 || scale < 0) {
+        stop("ERROR! scale must be 0, 1, ..., 3.")
     }
-    if (simopt > 16 || simopt < 1) {
-        stop("ERROR! simopt must be 1, 2, ..., 16.")
+    if (dist > 16 || dist < 1) {
+        stop("ERROR! dist must be 1, 2, ..., 16.")
     }
 
-    xstd <- Ruul.stdm(x,    opt = stdopt)
-    rt   <- Ruul.simm(xstd, opt = simopt)
-    Ruul.fdcp(rt)
+    xstd <- Ruul.scale(x, scale)
+
+    r <- Ruul.dist(xstd, dist)
+
+    rt <- Ruul.bind(r, r)
+    while (all(abs(r - rt) < 1E-4)) {  
+        r  <- rt
+        rt <- Ruul.bind(r, r)
+    }
+
+    Ruul.hclust(r)
 }
