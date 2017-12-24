@@ -15,7 +15,7 @@ Ruul <- function(x, scale = 0, dist = 1, method = "complete") {
     r <- Ruul.dist(xstd, dist)
 
     rt <- Ruul.bind(r, r)
-    while (all(abs(r - rt) < 1E-4)) {  
+    while (!all(abs(r - rt) < 1E-4)) {  
         r  <- rt
         rt <- Ruul.bind(r, r)
     }
