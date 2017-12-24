@@ -1,4 +1,4 @@
-Ruul <- function(x, scale = 0, dist = 1) {
+Ruul <- function(x, scale = 0, dist = 1, method = "complete") {
     if (! requireNamespace("Rcpp", quietly = TRUE)) {
         stop("Please install Rcpp: install.packages('Rcpp')")
     }
@@ -20,5 +20,5 @@ Ruul <- function(x, scale = 0, dist = 1) {
         rt <- Ruul.bind(r, r)
     }
 
-    Ruul.hclust(r)
+    Ruul.hclust(r, method, NULL)
 }

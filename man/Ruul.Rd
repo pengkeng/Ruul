@@ -4,7 +4,7 @@
     Fuzzy Dynamtic Clustering Picture Maker
 }
 \usage{
-    Ruul(x, scale = 0, dist = 1)
+Ruul(x, scale = 0, dist = 1, method = "complete")
 }
 \arguments{
     \item{x}{
@@ -56,21 +56,28 @@
 
         case 16: Chebyshev exponent distance similarity
     }
+    \item{method}{
+        the agglomeration method to be used.  
+
+        This should be (an unambiguous abbreviation of) one of "ward.D", 
+        "ward.D2", "single", "complete", "average" (= UPGMA), 
+        "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
+    }
 }
 \description{
     Fuzzy Dynamtic Clustering Picture Maker.
 }
 \examples{
 x <- matrix( c( 1.24,1.72, 
-                1.36,1.74, 
-                1.38,1.64, 
-                1.38,1.82, 
-                1.38,1.90, 
-                1.40,1.70, 
-                1.48,1.82, 
-                1.54,1.82, 
-                1.56,2.08, 
-                1.14,1.78 ), 
-             ncol = 2, byrow = TRUE )
-Ruul(x, scale = 1, dist = 12)
+               1.36,1.74, 
+               1.38,1.64, 
+               1.38,1.82, 
+               1.38,1.90, 
+               1.40,1.70, 
+               1.48,1.82, 
+               1.54,1.82, 
+               1.56,2.08, 
+               1.14,1.78 ), 
+            ncol = 2, byrow = TRUE )
+Ruul(x, scale = 1, dist = 12, method = "single")
 }
