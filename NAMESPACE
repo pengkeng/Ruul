@@ -1,3 +1,4 @@
 export("Ruul")
-import("Rcpp", "cluster")
+import("Rcpp")
+importFrom("stats", "as.dist", "hclust")
 useDynLib(Ruul)
