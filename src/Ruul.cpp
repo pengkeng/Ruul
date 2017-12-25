@@ -1,8 +1,5 @@
-#include <stdlib.h>
 #include "uul.h"
 #include "Ruul.h"
-
-using namespace Rcpp;
 
 // [[Rcpp::export]]
 SEXP RMatrixStandard(SEXP _X, SEXP _OPT)
@@ -11,29 +8,20 @@ SEXP RMatrixStandard(SEXP _X, SEXP _OPT)
     int opt = as<int> (_OPT);
     NumericMatrix XSTD(X.nrow(), X.ncol());
 
-    _PMatrix x, xstd;
+    _Matrix x, xstd;
+    _PMatrix px = &x, pxstd = &xstd;
 
-    x = (_PMatrix) malloc (sizeof (_Matrix));
-    xstd = (_PMatrix) malloc (sizeof (_Matrix));
+    matrixCreate(px, X.nrow(), X.ncol());
+    matrixCreate(pxstd, XSTD.nrow(), XSTD.ncol());
 
-    matrixCreate(x, X.nrow(), X.ncol());
-    matrixCreate(xstd, XSTD.nrow(), XSTD.ncol());
+    RMatrixCopy(px, X);
 
-    for (int i = 0; i < x->nrow; i++)
-        for (int j = 0; j < x->ncol; j++)
-            *(*(x->ptr + i) + j) = X(i, j);
+    matrixStandard(pxstd, px, opt);
 
-    matrixStandard(xstd, x, opt);
+    RMatrixCopy(XSTD, pxstd);
 
-    for (int i = 0; i < XSTD.nrow(); i++)
-        for (int j = 0; j < XSTD.ncol(); j++)
-            XSTD(i, j) = *(*(xstd->ptr + i) + j);
-
-    matrixDestroy(x);
-    matrixDestroy(xstd);
-
-    free(x);
-    free(xstd);
+    matrixDestroy(px);
+    matrixDestroy(pxstd);
 
     return XSTD;
 }
@@ -45,29 +33,20 @@ SEXP RMatrixSimilar(SEXP _X, SEXP _OPT)
     int opt = as<int>(_OPT);
     NumericMatrix R(X.nrow(), X.nrow());
 
-    _PMatrix x, r;
+    _Matrix x, r;
+    _PMatrix px = &x, pr = &r;
 
-    x = (_PMatrix) malloc (sizeof (_Matrix));
-    r = (_PMatrix) malloc (sizeof (_Matrix));
+    matrixCreate(px, X.nrow(), X.ncol());
+    matrixCreate(pr, R.nrow(), R.ncol());
 
-    matrixCreate(x, X.nrow(), X.ncol());
-    matrixCreate(r, R.nrow(), R.ncol());
+    RMatrixCopy(px, X);
 
-    for (int i = 0; i < x->nrow; i++)
-        for (int j = 0; j < x->ncol; j++)
-            *(*(x->ptr + i) + j) = X(i, j);
+    matrixSimilar(pr, px, opt);
 
-    matrixSimilar(r, x, opt);
+    RMatrixCopy(R, pr);
 
-    for (int i = 0; i < R.nrow(); i++)
-        for (int j = 0; j < R.ncol(); j++)
-            R(i, j) = *(*(r->ptr + i) + j);
-
-    matrixDestroy(x);
-    matrixDestroy(r);
-
-    free(x);
-    free(r);
+    matrixDestroy(px);
+    matrixDestroy(pr);
 
     return R;
 }
@@ -79,37 +58,23 @@ SEXP RMatrixComposite(SEXP _R1, SEXP _R2)
     NumericMatrix R2(_R2);
     NumericMatrix RT(R1.nrow(), R2.ncol());
  
-    _PMatrix r1, r2, rt;
+    _Matrix r1, r2, rt;
+    _PMatrix pr1 = &r1, pr2 = &r2, prt = &rt;
 
-    r1 = (_PMatrix) malloc (sizeof (_Matrix));
-    r2 = (_PMatrix) malloc (sizeof (_Matrix));
-    rt = (_PMatrix) malloc (sizeof (_Matrix));
+    matrixCreate(pr1, R1.nrow(), R1.ncol());
+    matrixCreate(pr2, R2.nrow(), R2.ncol());
+    matrixCreate(prt, RT.nrow(), RT.ncol());
 
-    matrixCreate(r1, R1.nrow(), R1.ncol());
-    matrixCreate(r2, R2.nrow(), R2.ncol());
-    matrixCreate(rt, RT.nrow(), RT.ncol());
+    RMatrixCopy(pr1, R1);
+    RMatrixCopy(pr2, R2);
 
-    for (int i = 0; i < r1->nrow; i++)
-        for (int j = 0; j < r1->ncol; j++) 
-            *(*(r1->ptr + i) + j) = R1(i, j);
+    matrixComposite(prt, pr1, pr2);
 
-    for (int i = 0; i < r2->nrow; i++)
-        for (int j = 0; j < r2->ncol; j++) 
-            *(*(r2->ptr + i) + j) = R2(i, j);
+    RMatrixCopy(RT, prt);
 
-    matrixComposite(rt, r1, r2);
-
-    for (int i = 0; i < RT.nrow(); i++)
-        for (int j = 0; j < RT.ncol(); j++)
-            RT(i, j) = *(*(rt->ptr + i) + j);
-
-    matrixDestroy(r1);
-    matrixDestroy(r2);
-    matrixDestroy(rt);
-
-    free(r1);
-    free(r2);
-    free(rt);
+    matrixDestroy(pr1);
+    matrixDestroy(pr2);
+    matrixDestroy(prt);
 
     return RT;
 }

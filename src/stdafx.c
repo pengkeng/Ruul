@@ -1,6 +1,4 @@
-#include <stdlib.h>
-#include <math.h>
-#include "uul.h"
+#include "stdafx.h"
 
 /* --------------------------------------------------------------------------*/
 /**

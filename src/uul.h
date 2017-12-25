@@ -1,42 +1,19 @@
 /**
  * @file uul.h
- * @Synopsis 模糊矩阵运算
+ * @Synopsis  模糊矩阵运算
  * @author Tokhta Horqin
  * @version 0.1.0
- * @date 2017-11-23
+ * @date 2017-12-25
  */
 
 #ifndef UUL_H
 #define UUL_H
-#include "uulconf.h"
+
+#include "stdafx.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-    /* --------------------------------------------------------------------------*/
-    /**
-     * @Synopsis  矩阵的创建
-     *
-     * @Param M 矩阵
-     * @Param nrow 矩阵的行数
-     * @Param ncol 矩阵的列数
-     *
-     * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
-     */
-    /* ----------------------------------------------------------------------------*/
-    extern _Status matrixCreate (_PMatrix M, _Integer nrow, _Integer ncol);
-
-    /* --------------------------------------------------------------------------*/
-    /**
-     * @Synopsis  矩阵的销毁
-     *
-     * @Param M 矩阵
-     *
-     * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
-     */
-    /* ----------------------------------------------------------------------------*/
-    extern _Status matrixDestroy (_PMatrix M);
 
     /* --------------------------------------------------------------------------*/
     /**
