@@ -2,7 +2,7 @@
 #define RUUL_H
 
 #include "stdafx.h"
-#include "Rstdafx.hpp"
+#include "Rstdafx.h"
 
 RcppExport SEXP RMatrixStandard(SEXP X, SEXP OPT);
 RcppExport SEXP RMatrixSimilar(SEXP X, SEXP OPT);

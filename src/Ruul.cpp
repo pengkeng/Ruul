@@ -1,5 +1,5 @@
 #include "uul.h"
-#include "Ruul.hpp"
+#include "Ruul.h"
 
 // [[Rcpp::export]]
 SEXP RMatrixStandard(SEXP _X, SEXP _OPT)
