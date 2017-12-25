@@ -10,7 +10,7 @@ Ruul.bind <- function (r1, r2) {
     .Call("RMatrixComposite", r1, r2, PACKAGE = "Ruul")
 }
 
-Ruul.hclust <- function(r, method = "complete", members = NULL) {
-    hclust(as.dist(r), method, members)
+Ruul.hclust <- function(d, method = "complete", members = NULL) {
+    hclust(d, method, members)
 }
 

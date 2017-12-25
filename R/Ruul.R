@@ -3,6 +3,19 @@ Ruul <- function(x, scale = 0, dist = 1, method = "complete") {
         stop("Please install Rcpp: install.packages('Rcpp')")
     }
 
+    if (! is.matrix(x)) {
+        stop("Please input x as matrix.")
+    }
+    if (! is.numeric(scale)) {
+        stop("Please input scale as numeric.")
+    }
+    if (! is.numeric(dist)) {
+        stop("Please input dist as numeric.")
+    }
+    if (! is.character(method)) {
+        stop("Please input method as character.")
+    }
+
     if (scale > 3 || scale < 0) {
         stop("ERROR! scale must be 0, 1, ..., 3.")
     }
@@ -15,10 +28,12 @@ Ruul <- function(x, scale = 0, dist = 1, method = "complete") {
     r <- Ruul.dist(xstd, dist)
 
     rt <- Ruul.bind(r, r)
-    while (!all(abs(r - rt) < 1E-4)) {  
+    while (! all(abs(r - rt) < 1E-4)) {  
         r  <- rt
         rt <- Ruul.bind(r, r)
     }
 
-    Ruul.hclust(r, method, NULL)
+    d <- as.dist(r)
+
+    Ruul.hclust(d, method, NULL)
 }
