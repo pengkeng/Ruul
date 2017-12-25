@@ -79,5 +79,6 @@ x <- matrix( c( 1.24,1.72,
                1.56,2.08, 
                1.14,1.78 ), 
             ncol = 2, byrow = TRUE )
-Ruul(x, scale = 1, dist = 12, method = "single")
+hc <- Ruul(x, scale = 1, dist = 12, method = "complete")
+plot(hc, hang = -1)
 }
