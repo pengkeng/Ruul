@@ -1,4 +1,4 @@
-#include "Rstdafx.h"
+#include "Rstdafx.hpp"
 
 void RMatrixCopy(NumericMatrix M, _PMatrix m)
 {
