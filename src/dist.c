@@ -69,72 +69,72 @@
  *
  * \begin{center}
  * $r_{ij} = \frac{2 \sum\limits_{k = 1}^{m}(x_{ik} \wedge x_{jk})}{\sum\limits_{k = 1}^{m} (x_{ik} + x_{jk})}$
-* \end{center}
-*
-* \subsection{几何平均最小法}
-*
-* \begin{center}
-* $r_{ij} = \frac{\sum\limits_{k = 1}^{m} (x_{ik} \wedge x_{jk})}{\sum\limits_{k = 1}^{m} \sqrt{x_{ik} x_{jk}}}$
-* \end{center}
-*
-* \section{距离法}
-*
-* \subsection{直接距离法}
-*
-* \begin{center}
-* $r_{ij} = 1 - cd(x_{i}, x_{j})$.
-* \end{center}
-*
-* 其中$c$为适当选取的参数, 
-    * 使$0 \le r_{ij} \le 1$, $d(x_{i}, x_{j})$表示$x_{i}$与$x_{j}$的距离. 
-    * 经典的距离有以下三种：
-    *
-    * \subsection{海明距离}
-    *
-    * \begin{center}
-    * $d(x_{i}, x_{j}) = \sum\limits_{k = 1}^{m} \lvert x_{ik} - x_{jk} \rvert$;
-    * \end{center}
-    *
-    * \subsection{欧几里得距离}
-    *
-    * \begin{center}
-    * $d(x_{i}, x_{j}) = \sqrt{\sum\limits_{k = 1}^{m}(x_{ik} - x_{jk})^{2}}$;
-    * \end{center}
-    *
-    * \subsection{切比雪夫距离}
-    *
-    * \begin{center}
-    * $d(x_{i}, x_{j}) = \vee_{k = 1}^{m} \lvert x_{ik} - x_{jk} \rvert$.
-    * \end{center}
-    *
-    * \section{倒数距离法}
-    *
-    * $$
-    * r_{ij} =
-    * \begin{cases}
-    * 1,& i = j, \\
-              * \frac{M}{d(x_{i}, x_{j})},& i \neq j,
-    * \end{cases}
-    * $$
-    *
-    * 其中M为适当选取的参数，使得$0 \le r_{ij} \le 1$.
-    *
-    */
+ * \end{center}
+ *
+ * \subsection{几何平均最小法}
+ *
+ * \begin{center}
+ * $r_{ij} = \frac{\sum\limits_{k = 1}^{m} (x_{ik} \wedge x_{jk})}{\sum\limits_{k = 1}^{m} \sqrt{x_{ik} x_{jk}}}$
+ * \end{center}
+ *
+ * \section{距离法}
+ *
+ * \subsection{直接距离法}
+ *
+ * \begin{center}
+ * $r_{ij} = 1 - cd(x_{i}, x_{j})$.
+ * \end{center}
+ *
+ * 其中$c$为适当选取的参数, 
+ * 使$0 \le r_{ij} \le 1$, $d(x_{i}, x_{j})$表示$x_{i}$与$x_{j}$的距离. 
+ * 经典的距离有以下三种：
+ *
+ * \subsection{海明距离}
+ *
+ * \begin{center}
+ * $d(x_{i}, x_{j}) = \sum\limits_{k = 1}^{m} \lvert x_{ik} - x_{jk} \rvert$;
+ * \end{center}
+ *
+ * \subsection{欧几里得距离}
+ *
+ * \begin{center}
+ * $d(x_{i}, x_{j}) = \sqrt{\sum\limits_{k = 1}^{m}(x_{ik} - x_{jk})^{2}}$;
+ * \end{center}
+ *
+ * \subsection{切比雪夫距离}
+ *
+ * \begin{center}
+ * $d(x_{i}, x_{j}) = \vee_{k = 1}^{m} \lvert x_{ik} - x_{jk} \rvert$.
+ * \end{center}
+ *
+ * \section{倒数距离法}
+ *
+ * $$
+ * r_{ij} =
+ * \begin{cases}
+ * 1,& i = j, \\
+ * \frac{M}{d(x_{i}, x_{j})},& i \neq j,
+ * \end{cases}
+ * $$
+ *
+ * 其中M为适当选取的参数，使得$0 \le r_{ij} \le 1$.
+ *
+ */
 
 #include "uul.h"
 
-    /* --------------------------------------------------------------------------*/
-    /**
-     * @Synopsis  相似矩阵的创建
-     *
-     * @Param R 创建的相似矩阵
-     * @Param X 输入的数据矩阵
-     * @Param opt 相似矩阵创建的方法
-     *
-     * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败，-1—输入数据矩阵存在严重问题
-     */
-    /* ----------------------------------------------------------------------------*/
-_Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
+/* --------------------------------------------------------------------------*/
+/**
+ * @Synopsis  相似矩阵的创建
+ *
+ * @Param R 创建的相似矩阵
+ * @Param X 输入的数据矩阵
+ * @Param opt 相似矩阵创建的方法
+ *
+ * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败，-1—输入数据矩阵存在严重问题
+ */
+/* ----------------------------------------------------------------------------*/
+Status Dist (PMatrix R, PMatrix X, Integer opt)
 {
     if (X->nrow <= 0 || X->ncol <= 0) {
         return _FAILTURE_;
@@ -147,15 +147,15 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
     }
 
     if (opt == 1) {
-        _ElemType temp;
-        _ElemType maxM;
+        ElemType temp;
+        ElemType maxM;
 
         maxM = 0;
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = 0; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = 0; j < X->nrow; j++) {
                 if (i != j) {
                     temp = 0;
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         temp += *(*(X->ptr + i) + k) * *(*(X->ptr + j) + k);
                     }
                     if (maxM < temp) {
@@ -168,14 +168,14 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
             }
         }
         maxM += 1;
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = 0; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = 0; j < X->nrow; j++) {
                 if (i == j) {
                     *(*(R->ptr + i)+ j) = 1;
                 } 
                 else {
                     *(*(R->ptr + i) + j) = 0;
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         *(*(R->ptr + i)+ j) += *(*(X->ptr + i)+ k) * *(*(X->ptr + j) + k);
                     }
                     *(*(R->ptr + i) + j) /= maxM;
@@ -187,18 +187,18 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
         } 
     } 
     else if (opt == 2) {
-        _ElemType xi, xj, s;
+        ElemType xi, xj, s;
 
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = 0; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = 0; j < X->nrow; j++) {
                 xi = 0; xj = 0;
-                for (_Integer k = 0; k < X->ncol; k++) {
+                for (Integer k = 0; k < X->ncol; k++) {
                     xi += *(*(X->ptr + i) + k) * *(*(X->ptr + i) + k);
                     xj += *(*(X->ptr + j) + k) * *(*(X->ptr + j)+ k);
                 }
                 s = sqrt (xi * xj);
                 *(*(R->ptr + i) + j) = 0;
-                for (_Integer k = 0; k < X->ncol; k++) {
+                for (Integer k = 0; k < X->ncol; k++) {
                     *(*(R->ptr + i) + j) += 
                         *(*(X->ptr + i) + k) * *(*(X->ptr + j) + k);
                 }
@@ -210,26 +210,26 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
         }
     }
     else if (opt == 3) {
-        _ElemType xi, xj, s;
-        _ElemType xis, xjs;
+        ElemType xi, xj, s;
+        ElemType xis, xjs;
 
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = 0; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = 0; j < X->nrow; j++) {
                 xi = 0; xj = 0;
-                for (_Integer k = 0; k < X->ncol; k++) {
+                for (Integer k = 0; k < X->ncol; k++) {
                     xi += *(*(X->ptr + i) + k);
                     xj += *(*(X->ptr + j) + k);
                 }
                 xi /= X->ncol; 
                 xj /= X->ncol;
                 xis = 0; xjs = 0;
-                for (_Integer k = 0; k < X->ncol; k++) {
+                for (Integer k = 0; k < X->ncol; k++) {
                     xis += pow (*(*(X->ptr + i) + k) - xi, 2);
                     xjs += pow (*(*(X->ptr + j) + k) - xj, 2);
                 }
                 s = sqrt (xis * xjs);
                 *(*(R->ptr + i) + j) = 0;
-                for (_Integer k = 0; k < X->ncol; k++) {
+                for (Integer k = 0; k < X->ncol; k++) {
                     *(*(R->ptr + i) + j) += 
                         fabs ((*(*(X->ptr + i) + k) - xi) * (*(*(X->ptr + j) + k) - xj));
                 }
@@ -238,20 +238,20 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
         }
     } 
     else if (opt == 4) {
-        _ElemType xk, sk;
-        _ElemType exponent;
+        ElemType xk, sk;
+        ElemType exponent;
 
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = 0; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = 0; j < X->nrow; j++) {
                 *(*(R->ptr + i) + j) = 0;
-                for (_Integer k = 0; k < X->ncol; k++) {
+                for (Integer k = 0; k < X->ncol; k++) {
                     xk= 0;
-                    for (_Integer z = 0; z < X->nrow; z++) {
+                    for (Integer z = 0; z < X->nrow; z++) {
                         xk += *(*(X->ptr + z) + k);
                     }
                     xk /= X->nrow;
                     sk = 0;
-                    for (_Integer z = 0; z < X->nrow; z++) {
+                    for (Integer z = 0; z < X->nrow; z++) {
                         sk += pow(*(*(X->ptr + z) + k) - xk, 2);
                     }                    
                     sk /= X->nrow;
@@ -264,13 +264,13 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
         }
     } 
     else if (opt <= 7) {
-        _ElemType fz, fm;
+        ElemType fz, fm;
 
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = 0; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = 0; j < X->nrow; j++) {
                 fz = 0; 
                 fm = 0;
-                for (_Integer k = 0; k < X->ncol; k++) {
+                for (Integer k = 0; k < X->ncol; k++) {
                     if (*(*(X->ptr + j) + k) < 0) {
                         return _ERROR_;
                     }
@@ -282,7 +282,7 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
                     }
                 }
                 if (opt == 5) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         if (*(*(X->ptr + i) + k) > *(*(X->ptr + j) + k)) {
                             fm += *(*(X->ptr + i) + k);
                         } 
@@ -292,12 +292,12 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
                     }
                 } 
                 else if (opt == 6) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         fm += (*(*(X->ptr + i) + k) + *(*(X->ptr + j) + k)) / 2;
                     }
                 } 
                 else if (opt == 7) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         fm += sqrt (*(*(X->ptr + i) + k) * *(*(X->ptr + j) + k));
                     }
                 }
@@ -306,26 +306,26 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
         }
     } 
     else if (opt <= 10) {
-        _ElemType d;
-        _ElemType c;
+        ElemType d;
+        ElemType c;
 
         c = 0;
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = i + 1; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = i + 1; j < X->nrow; j++) {
                 d = 0;
                 if (opt == 8) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += pow ((*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k)), 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 9) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 10) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }
@@ -337,22 +337,22 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
             }
         }
         c = 1.0 / (1.0 + c);
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = 0; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = 0; j < X->nrow; j++) {
                 d = 0;
                 if (opt == 8) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += pow (*(*(X->ptr + i) + k) -*(*(X->ptr + j) + k) , 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 9) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 10) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }
@@ -363,26 +363,26 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
         }
     } 
     else if (opt <= 13) {
-        _ElemType minM;
-        _ElemType d;
+        ElemType minM;
+        ElemType d;
 
         minM = 1E+6;
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = i + 1; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = i + 1; j < X->nrow; j++) {
                 d = 0;
                 if (opt == 11) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += pow (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k), 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 12) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 13) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }
@@ -394,26 +394,26 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
             }
         }
         minM *= 0.9999;
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = 0; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = 0; j < X->nrow; j++) {
                 d = 0;
                 if (i == j) {
                     *(*(R->ptr + i) + j) = 1;
                     continue;
                 }
                 if (opt == 11) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += pow (*(*(X->ptr + i) + k)- *(*(X->ptr + j) + k), 2);
                     }
                     d = sqrt(d);
                 } 
                 else if (opt == 12) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 13) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }
@@ -424,24 +424,24 @@ _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt)
         }
     } 
     else if (opt <= 16) {
-        _ElemType d;
+        ElemType d;
 
-        for (_Integer i = 0; i < X->nrow; i++) {
-            for (_Integer j = 0; j < X->nrow; j++) {
+        for (Integer i = 0; i < X->nrow; i++) {
+            for (Integer j = 0; j < X->nrow; j++) {
                 d = 0;
                 if (opt == 14) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += pow (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k), 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 15) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 16) {
-                    for (_Integer k = 0; k < X->ncol; k++) {
+                    for (Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }

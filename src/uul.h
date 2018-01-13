@@ -26,7 +26,7 @@ extern "C" {
      * @Returns   0-矩阵合成成功，1-矩阵合成失败
      */
     /* ----------------------------------------------------------------------------*/
-    extern _Status matrixComposite (_PMatrix Rt, _PMatrix R1, _PMatrix R2);
+    extern Status Bind (PMatrix Rt, PMatrix R1, PMatrix R2);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -39,7 +39,7 @@ extern "C" {
      * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败，-1—输入数据矩阵存在严重问题
      */
     /* ----------------------------------------------------------------------------*/
-    extern _Status matrixSimilar (_PMatrix R, _PMatrix X, _Integer opt);
+    extern Status Dist (PMatrix R, PMatrix X, Integer opt);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -52,7 +52,7 @@ extern "C" {
      * @Returns   0-矩阵标准化成功，1—矩阵标准化失败，-1—输入数据矩阵存在严重问题
      */
     /* ----------------------------------------------------------------------------*/
-    extern _Status matrixStandard (_PMatrix Xstd, _PMatrix X, _Integer opt);
+    extern Status Scale (PMatrix Xstd, PMatrix X, Integer opt);
 
 #ifdef __cplusplus
 }

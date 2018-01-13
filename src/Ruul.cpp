@@ -2,79 +2,80 @@
 #include "Ruul.h"
 
 // [[Rcpp::export]]
-SEXP RMatrixStandard(SEXP _X, SEXP _OPT)
+SEXP Ruul::RScale(SEXP _X, SEXP _OPT)
 {
-    NumericMatrix X(_X);
-    int opt = as<int> (_OPT);
-    NumericMatrix XSTD(X.nrow(), X.ncol());
+    Rcpp::NumericMatrix X(_X);
+    Rcpp::NumericMatrix XSTD(X.nrow(), X.ncol());
 
-    _Matrix x, xstd;
-    _PMatrix px = &x, pxstd = &xstd;
+    Matrix x, xstd;
+    PMatrix px = &x, pxstd = &xstd;
+    Integer opt = Rcpp::as<Integer> (_OPT);
 
-    matrixCreate(px, X.nrow(), X.ncol());
-    matrixCreate(pxstd, XSTD.nrow(), XSTD.ncol());
+    Create(px, X.nrow(), X.ncol());
+    Create(pxstd, XSTD.nrow(), XSTD.ncol());
 
-    RMatrixCopy(px, X);
+    RCopy(px, X);
 
-    matrixStandard(pxstd, px, opt);
+    Scale(pxstd, px, opt);
 
-    RMatrixCopy(XSTD, pxstd);
+    RCopy(XSTD, pxstd);
 
-    matrixDestroy(px);
-    matrixDestroy(pxstd);
+    Destroy(px);
+    Destroy(pxstd);
 
     return XSTD;
 }
 
 // [[Rcpp::export]]
-SEXP RMatrixSimilar(SEXP _X, SEXP _OPT)
+SEXP Ruul::RDist(SEXP _X, SEXP _OPT)
 {
-    NumericMatrix X(_X);
-    int opt = as<int>(_OPT);
-    NumericMatrix R(X.nrow(), X.nrow());
+    Rcpp::NumericMatrix X(_X);
+    Rcpp::NumericMatrix R(X.nrow(), X.nrow());
 
-    _Matrix x, r;
-    _PMatrix px = &x, pr = &r;
+    Matrix x, r;
+    PMatrix px = &x, pr = &r;
+    Integer opt = Rcpp::as<Integer>(_OPT);
 
-    matrixCreate(px, X.nrow(), X.ncol());
-    matrixCreate(pr, R.nrow(), R.ncol());
+    Create(px, X.nrow(), X.ncol());
+    Create(pr, R.nrow(), R.ncol());
 
-    RMatrixCopy(px, X);
+    RCopy(px, X);
 
-    matrixSimilar(pr, px, opt);
+    Dist(pr, px, opt);
 
-    RMatrixCopy(R, pr);
+    RCopy(R, pr);
 
-    matrixDestroy(px);
-    matrixDestroy(pr);
+    Destroy(px);
+    Destroy(pr);
 
     return R;
 }
 
 // [[Rcpp::export]]
-SEXP RMatrixComposite(SEXP _R1, SEXP _R2)
+SEXP Ruul::RBind(SEXP _R1, SEXP _R2)
 {
-    NumericMatrix R1(_R1);
-    NumericMatrix R2(_R2);
-    NumericMatrix RT(R1.nrow(), R2.ncol());
+    Rcpp::NumericMatrix R1(_R1);
+    Rcpp::NumericMatrix R2(_R2);
+    Rcpp::NumericMatrix RT(R1.nrow(), R2.ncol());
  
-    _Matrix r1, r2, rt;
-    _PMatrix pr1 = &r1, pr2 = &r2, prt = &rt;
+    Matrix r1, r2, rt;
+    PMatrix pr1 = &r1, pr2 = &r2, prt = &rt;
 
-    matrixCreate(pr1, R1.nrow(), R1.ncol());
-    matrixCreate(pr2, R2.nrow(), R2.ncol());
-    matrixCreate(prt, RT.nrow(), RT.ncol());
+    Create(pr1, R1.nrow(), R1.ncol());
+    Create(pr2, R2.nrow(), R2.ncol());
 
-    RMatrixCopy(pr1, R1);
-    RMatrixCopy(pr2, R2);
+    RCopy(pr1, R1);
+    RCopy(pr2, R2);
 
-    matrixComposite(prt, pr1, pr2);
+    Create(prt, RT.nrow(), RT.ncol());
 
-    RMatrixCopy(RT, prt);
+    Bind(prt, pr1, pr2);
 
-    matrixDestroy(pr1);
-    matrixDestroy(pr2);
-    matrixDestroy(prt);
+    RCopy(RT, prt);
+
+    Destroy(pr1);
+    Destroy(pr2);
+    Destroy(prt);
 
     return RT;
 }

@@ -6,7 +6,7 @@
  * $Z = {z_{1}, z_{2}, \cdots, z_{s}}$, 
  *
  * $X$到$Y$的关系矩阵$\mathbf{R}_{1}$的关系矩阵为
- *  $\mathbf{R}_{1} = (r_{ij})_{m \times n}$, 
+ * $\mathbf{R}_{1} = (r_{ij})_{m \times n}$, 
  * $Y$到$Z$的关系矩阵$\mathbf{R}_{1}$的关系矩阵为
  * $\mathbf{R}_{2} = (p_{ij})_{n \times s}$, 
  * 则$X$到$Z$的关系矩阵
@@ -18,18 +18,18 @@
 
 #include "uul.h"
 
-    /* --------------------------------------------------------------------------*/
-    /**
-     * @Synopsis  关系矩阵的合成
-     *
-     * @Param R 合成的关系矩阵
-     * @Param R1 输入的关系矩阵R1
-     * @Param R2 输入的关系矩阵R2
-     *
-     * @Returns   0-矩阵合成成功，1-矩阵合成失败
-     */
-    /* ----------------------------------------------------------------------------*/
-_Status matrixComposite (_PMatrix Rt, _PMatrix R1, _PMatrix R2)
+/* --------------------------------------------------------------------------*/
+/**
+ * @Synopsis  关系矩阵的合成
+ *
+ * @Param R 合成的关系矩阵
+ * @Param R1 输入的关系矩阵R1
+ * @Param R2 输入的关系矩阵R2
+ *
+ * @Returns   0-矩阵合成成功，1-矩阵合成失败
+ */
+/* ----------------------------------------------------------------------------*/
+Status Bind (PMatrix Rt, PMatrix R1, PMatrix R2)
 {
     if (R1->nrow <= 0 || R1->ncol <= 0) {
         return _FAILTURE_;
@@ -47,12 +47,12 @@ _Status matrixComposite (_PMatrix Rt, _PMatrix R1, _PMatrix R2)
         return _FAILTURE_;
     }
 
-    _ElemType temp;
+    ElemType temp;
 
-    for (_Integer i = 0; i < R1->nrow; i++) {
-        for (_Integer j = 0; j < R2->ncol; j++) {
+    for (Integer i = 0; i < R1->nrow; i++) {
+        for (Integer j = 0; j < R2->ncol; j++) {
             *(*(Rt->ptr + i)+ j) = 0;
-            for (_Integer k = 0; k < R1->ncol; k++) {
+            for (Integer k = 0; k < R1->ncol; k++) {
                 temp = *(*(R2->ptr + k)+ j);
                 if (*(*(R1->ptr + i) + k) < temp) {
                     temp = *(*(R1->ptr + i) + k);
@@ -65,3 +65,4 @@ _Status matrixComposite (_PMatrix Rt, _PMatrix R1, _PMatrix R2)
     }
     return _SUCCESS_;
 }
+

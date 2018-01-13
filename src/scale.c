@@ -36,18 +36,18 @@
 
 #include "uul.h"
 
-    /* --------------------------------------------------------------------------*/
-    /**
-     * @Synopsis  标准矩阵的创建
-     *
-     * @Param Xstd 创建的标准矩阵
-     * @Param X 输入的数据矩阵
-     * @Param opt 标准矩阵创建的方法
-     *
-     * @Returns   0-矩阵标准化成功，1—矩阵标准化失败，-1—输入数据矩阵存在严重问题
-     */
-    /* ----------------------------------------------------------------------------*/
-_Status matrixStandard (_PMatrix Xstd, _PMatrix X, _Integer opt)
+/* --------------------------------------------------------------------------*/
+/**
+ * @Synopsis  标准矩阵的创建
+ *
+ * @Param Xstd 创建的标准矩阵
+ * @Param X 输入的数据矩阵
+ * @Param opt 标准矩阵创建的方法
+ *
+ * @Returns   0-矩阵标准化成功，1—矩阵标准化失败，-1—输入数据矩阵存在严重问题
+ */
+/* ----------------------------------------------------------------------------*/
+Status Scale (PMatrix Xstd, PMatrix X, Integer opt)
 {
     if (X->nrow == 0 || X->ncol == 0) {
         return _FAILTURE_;
@@ -60,39 +60,39 @@ _Status matrixStandard (_PMatrix Xstd, _PMatrix X, _Integer opt)
     }
 
 	if (opt == 0) {
-        for (_Integer j = 0; j < X->ncol; j++) {
-            for (_Integer i = 0; i < X->nrow; i++) {
+        for (Integer j = 0; j < X->ncol; j++) {
+            for (Integer i = 0; i < X->nrow; i++) {
                 *(*(Xstd->ptr + i) + j) = *(*(X->ptr + i) + j); 
             }
         }
 	}
     else if (opt == 1) {
-		_ElemType sk, xk;
+		ElemType sk, xk;
 
-		for (_Integer j = 0; j < X->ncol; j++) {
+		for (Integer j = 0; j < X->ncol; j++) {
 			xk = 0;
-			for (_Integer i = 0; i < X->nrow; i++) {
+			for (Integer i = 0; i < X->nrow; i++) {
 				xk += *(*(X->ptr + i) + j);
 			}
 			xk /= X->nrow;
 			sk = 0;
-			for (_Integer i = 0; i < X->nrow; i++) {
+			for (Integer i = 0; i < X->nrow; i++) {
 				sk += pow (*(*(X->ptr + i) + j) - xk, 2);
 			}
 			sk = sqrt (sk / X->nrow);
 			if (sk > 1E-6) {
-				for (_Integer i = 0; i < X->nrow; i++) {
+				for (Integer i = 0; i < X->nrow; i++) {
 					*(*(Xstd->ptr + i) + j) = (*(*(X->ptr + i) + j) - xk) / sk;
 				}
 			}
 		}
 	} 
     else if (opt == 2) {
-		_ElemType xmin, xmax;
+		ElemType xmin, xmax;
 
-		for (_Integer j = 0; j < X->ncol; j++) {
+		for (Integer j = 0; j < X->ncol; j++) {
 			xmin = *(*(X->ptr + j)); xmax = *(*(X->ptr + j));
-			for (_Integer i = 0; i < X->nrow; i++) {
+			for (Integer i = 0; i < X->nrow; i++) {
 				if (xmin > *(*(X->ptr + i) + j)) {
 					xmin = *(*(X->ptr + i) + j);
 				}
@@ -102,20 +102,20 @@ _Status matrixStandard (_PMatrix Xstd, _PMatrix X, _Integer opt)
 			}
 			if (xmax > xmin) {
 				xmax = xmax - xmin;
-				for (_Integer i = 0; i < X->nrow; i++) {
+				for (Integer i = 0; i < X->nrow; i++) {
 					*(*(Xstd->ptr + i) + j) = (*(*(X->ptr + i) + j) - xmin) / xmax;
 				}
 			} 
             else {
-				for (_Integer i = 0; i < X->nrow; i++) {
+				for (Integer i = 0; i < X->nrow; i++) {
 					*(*(Xstd->ptr + i) + j) = 0;
 				}
 			}
 		}
 	} 
     else if (opt == 3) {
-        for (_Integer j = 0; j < X->ncol; j++) {
-            for (_Integer i = 0; i < X->nrow; i++) {
+        for (Integer j = 0; j < X->ncol; j++) {
+            for (Integer i = 0; i < X->nrow; i++) {
                 *(*(Xstd->ptr + i) + j + 0) = log10 (*(*(Xstd->ptr + i) + j));
             }
         }

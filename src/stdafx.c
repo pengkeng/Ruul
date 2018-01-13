@@ -11,7 +11,7 @@
  * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
  */
 /* ----------------------------------------------------------------------------*/
-_Status matrixCreate (_PMatrix M, _Integer nrow, _Integer ncol)
+Status Create (PMatrix M, Integer nrow, Integer ncol)
 {
     if (nrow <= 0 || ncol <= 0) {
         return _FAILTURE_;
@@ -20,13 +20,13 @@ _Status matrixCreate (_PMatrix M, _Integer nrow, _Integer ncol)
     M->nrow = nrow;
     M->ncol = ncol;
 
-    M->ptr = (_ElemType **) malloc (sizeof (_ElemType *) * M->nrow);
+    M->ptr = (ElemType **) malloc (sizeof (ElemType *) * M->nrow);
     if (M->ptr == NULL) {
         return _OVERFLOW_;
     }
 
-    for (_Integer i = 0; i < M->nrow; i++) {
-        *(M->ptr + i) = (_ElemType *)calloc(M->ncol, sizeof (_ElemType));
+    for (Integer i = 0; i < M->nrow; i++) {
+        *(M->ptr + i) = (ElemType *) malloc (sizeof (ElemType) * M->ncol);
         if (*(M->ptr + i) == NULL) {
             return _OVERFLOW_;
         }
@@ -44,9 +44,9 @@ _Status matrixCreate (_PMatrix M, _Integer nrow, _Integer ncol)
  * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
  */
 /* ----------------------------------------------------------------------------*/
-_Status matrixDestroy (_PMatrix M)
+Status Destroy (PMatrix M)
 {
-    for (_Integer i = 0; i < M->nrow; i++) {
+    for (Integer i = 0; i < M->nrow; i++) {
         free (*(M->ptr + i));
     }
     free (M->ptr);

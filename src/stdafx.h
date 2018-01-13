@@ -26,9 +26,9 @@ extern "C" {
      * @Synopsis  自定义数据类型
      */
     /* ----------------------------------------------------------------------------*/
-    typedef int    _Status;   /* 函数的返回结果：运行成功、运行失败、内存不足、输入数据存在严重问题 */
-    typedef double _ElemType; /* 浮点数类型 */
-    typedef int    _Integer;  /* 整数类型 */
+    typedef int    Status;   /* 函数的返回结果：运行成功、运行失败、内存不足、输入数据存在严重问题 */
+    typedef double ElemType; /* 浮点数类型 */
+    typedef int    Integer;  /* 整数类型 */
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -36,10 +36,10 @@ extern "C" {
      */
     /* ----------------------------------------------------------------------------*/
     typedef struct {
-        _ElemType **ptr;
+        ElemType **ptr;
         int nrow;
         int ncol;
-    } *_PMatrix, _Matrix;
+    } *PMatrix, Matrix;
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -52,7 +52,7 @@ extern "C" {
      * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
      */
     /* ----------------------------------------------------------------------------*/
-    extern _Status matrixCreate (_PMatrix M, _Integer nrow, _Integer ncol);
+    extern Status Create (PMatrix M, Integer nrow, Integer ncol);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -63,7 +63,7 @@ extern "C" {
      * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
      */
     /* ----------------------------------------------------------------------------*/
-    extern _Status matrixDestroy (_PMatrix M);
+    extern Status Destroy (PMatrix M);
 
 #ifdef __cplusplus
 }

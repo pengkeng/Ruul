@@ -4,9 +4,7 @@
 #include <Rcpp.h>
 #include "stdafx.h"
 
-using namespace Rcpp;
-
-void RMatrixCopy(NumericMatrix M, _PMatrix m);
-void RMatrixCopy(_PMatrix m, NumericMatrix M);
+void RCopy(Rcpp::NumericMatrix M, PMatrix m);
+void RCopy(PMatrix m, Rcpp::NumericMatrix M);
 
 #endif /*!Rstdafx.h*/

@@ -4,8 +4,11 @@
 #include "stdafx.h"
 #include "Rstdafx.h"
 
-RcppExport SEXP RMatrixStandard(SEXP X, SEXP OPT);
-RcppExport SEXP RMatrixSimilar(SEXP X, SEXP OPT);
-RcppExport SEXP RMatrixComposite(SEXP R1, SEXP R2);
+namespace Ruul {
+    RcppExport SEXP RScale(SEXP X, SEXP OPT);
+    RcppExport SEXP RDist(SEXP X, SEXP OPT);
+    RcppExport SEXP RBind(SEXP R1, SEXP R2);
+};
 
 #endif /*!Ruul.h*/
+
