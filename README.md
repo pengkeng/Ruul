@@ -2,7 +2,7 @@
 
 ## What is Ruul? ##
 
-Ruul is *Fuzzy* *Dynamtic* *Clustering* *Analysis* *Picture* *Maker* developed by
+Ruul is *Fuzzy* *Dynamic* *Clustering* *Analysis* *Picture* *Maker* developed by
 Tokhta Horqin at China University of Geosciences in China, and based on 
 谢季坚, 刘承平. 模糊数学方法及其应用[M]. 华中科技大学出版社. 2000
 
