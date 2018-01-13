@@ -2,7 +2,7 @@
 #include "Ruul.h"
 
 // [[Rcpp::export]]
-SEXP Ruul::RScale(SEXP _X, SEXP _OPT)
+SEXP RScale(SEXP _X, SEXP _OPT)
 {
     Rcpp::NumericMatrix X(_X);
     Rcpp::NumericMatrix XSTD(X.nrow(), X.ncol());
@@ -27,7 +27,7 @@ SEXP Ruul::RScale(SEXP _X, SEXP _OPT)
 }
 
 // [[Rcpp::export]]
-SEXP Ruul::RDist(SEXP _X, SEXP _OPT)
+SEXP RDist(SEXP _X, SEXP _OPT)
 {
     Rcpp::NumericMatrix X(_X);
     Rcpp::NumericMatrix R(X.nrow(), X.nrow());
@@ -52,7 +52,7 @@ SEXP Ruul::RDist(SEXP _X, SEXP _OPT)
 }
 
 // [[Rcpp::export]]
-SEXP Ruul::RBind(SEXP _R1, SEXP _R2)
+SEXP RBind(SEXP _R1, SEXP _R2)
 {
     Rcpp::NumericMatrix R1(_R1);
     Rcpp::NumericMatrix R2(_R2);
