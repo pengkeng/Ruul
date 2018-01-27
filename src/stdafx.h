@@ -26,44 +26,17 @@ extern "C" {
      * @Synopsis  自定义数据类型
      */
     /* ----------------------------------------------------------------------------*/
-    typedef int    Status;   /* 函数的返回结果：运行成功、运行失败、内存不足、输入数据存在严重问题 */
-    typedef double ElemType; /* 浮点数类型 */
-    typedef int    Integer;  /* 整数类型 */
-
-    /* --------------------------------------------------------------------------*/
-    /**
-     * @Synopsis  矩阵的数据结构
-     */
-    /* ----------------------------------------------------------------------------*/
+    typedef int      Status;      /* 函数的返回结果：运行成功、运行失败、内存不足、输入数据存在严重问题 */
+    typedef double   ElemType;    /* 浮点数类型 */
+    typedef double  *ElemTypeP;   /* 浮点数指针类型 */
+    typedef double **ElemTypePP;  /* 浮点数指针的指针类型 */
+    typedef int      Integer;     /* 整数类型 */
+    typedef int     *IntegerP;    /* 整数指针类型 */
     typedef struct {
         ElemType **ptr;
-        int nrow;
-        int ncol;
-    } *PMatrix, Matrix;
-
-    /* --------------------------------------------------------------------------*/
-    /**
-     * @Synopsis  矩阵的创建
-     *
-     * @Param M 矩阵
-     * @Param nrow 矩阵的行数
-     * @Param ncol 矩阵的列数
-     *
-     * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
-     */
-    /* ----------------------------------------------------------------------------*/
-    extern Status Create (PMatrix M, Integer nrow, Integer ncol);
-
-    /* --------------------------------------------------------------------------*/
-    /**
-     * @Synopsis  矩阵的销毁
-     *
-     * @Param M 矩阵
-     *
-     * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
-     */
-    /* ----------------------------------------------------------------------------*/
-    extern Status Destroy (PMatrix M);
+        Integer nrow;
+        Integer ncol;
+    } Matrix, *MatrixP;           /* 矩阵的数据结构 */
 
 #ifdef __cplusplus
 }

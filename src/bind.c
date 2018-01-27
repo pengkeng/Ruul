@@ -29,7 +29,7 @@
  * @Returns   0-矩阵合成成功，1-矩阵合成失败
  */
 /* ----------------------------------------------------------------------------*/
-Status Bind (PMatrix Rt, PMatrix R1, PMatrix R2)
+Status Bind (MatrixP Rt, MatrixP R1, MatrixP R2)
 {
     if (R1->nrow <= 0 || R1->ncol <= 0) {
         return _FAILTURE_;

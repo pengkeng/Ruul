@@ -134,7 +134,7 @@
  * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败，-1—输入数据矩阵存在严重问题
  */
 /* ----------------------------------------------------------------------------*/
-Status Dist (PMatrix R, PMatrix X, Integer opt)
+Status Dist (MatrixP R, MatrixP X, Integer opt)
 {
     if (X->nrow <= 0 || X->ncol <= 0) {
         return _FAILTURE_;

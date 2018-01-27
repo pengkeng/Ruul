@@ -47,7 +47,7 @@
  * @Returns   0-矩阵标准化成功，1—矩阵标准化失败，-1—输入数据矩阵存在严重问题
  */
 /* ----------------------------------------------------------------------------*/
-Status Scale (PMatrix Xstd, PMatrix X, Integer opt)
+Status Scale (MatrixP Xstd, MatrixP X, Integer opt)
 {
     if (X->nrow == 0 || X->ncol == 0) {
         return _FAILTURE_;

@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "uul.h"
 
 /* --------------------------------------------------------------------------*/
 /**
@@ -11,7 +11,7 @@
  * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
  */
 /* ----------------------------------------------------------------------------*/
-Status Create (PMatrix M, Integer nrow, Integer ncol)
+Status Create (MatrixP M, Integer nrow, Integer ncol)
 {
     if (nrow <= 0 || ncol <= 0) {
         return _FAILTURE_;
@@ -20,13 +20,13 @@ Status Create (PMatrix M, Integer nrow, Integer ncol)
     M->nrow = nrow;
     M->ncol = ncol;
 
-    M->ptr = (ElemType **) malloc (sizeof (ElemType *) * M->nrow);
+    M->ptr = (ElemTypePP) malloc (sizeof (ElemTypeP) * M->nrow);
     if (M->ptr == NULL) {
         return _OVERFLOW_;
     }
 
     for (Integer i = 0; i < M->nrow; i++) {
-        *(M->ptr + i) = (ElemType *) malloc (sizeof (ElemType) * M->ncol);
+        *(M->ptr + i) = (ElemTypeP) malloc (sizeof (ElemType) * M->ncol);
         if (*(M->ptr + i) == NULL) {
             return _OVERFLOW_;
         }
@@ -35,22 +35,4 @@ Status Create (PMatrix M, Integer nrow, Integer ncol)
     return _SUCCESS_;
 }
 
-/* --------------------------------------------------------------------------*/
-/**
- * @Synopsis  矩阵的销毁
- *
- * @Param M 矩阵
- *
- * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
- */
-/* ----------------------------------------------------------------------------*/
-Status Destroy (PMatrix M)
-{
-    for (Integer i = 0; i < M->nrow; i++) {
-        free (*(M->ptr + i));
-    }
-    free (M->ptr);
-
-    return _SUCCESS_;
-}
 
