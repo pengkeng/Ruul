@@ -14,7 +14,7 @@ and based on 谢季坚, 刘承平. 模糊数学方法及其应用[M]. 华中科�
 
 ## License ##
 
-Ruul is free software distributed under the terms of the MIT license.
+Ruul is free software distributed under the terms of GPL.
 
 ## Information ##
 
