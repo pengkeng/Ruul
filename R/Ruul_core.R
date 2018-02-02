@@ -10,7 +10,3 @@ Ruul.bind <- function (r1, r2) {
     .Call("RBind", r1, r2, PACKAGE = "Ruul")
 }
 
-Ruul.hclust <- function(d, method = "complete", members = NULL) {
-    hclust(d, method, members)
-}
-

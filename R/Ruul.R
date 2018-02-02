@@ -1,4 +1,4 @@
-Ruul <- function(x, scale = 0, dist = 1, method = "complete") {
+Ruul <- function(x, scale = 0, dist = 1) {
     if (! requireNamespace("Rcpp", quietly = TRUE)) {
         stop("Please install Rcpp: install.packages('Rcpp')")
     }
@@ -11,9 +11,6 @@ Ruul <- function(x, scale = 0, dist = 1, method = "complete") {
     }
     if (! is.numeric(dist)) {
         stop("Please input dist as numeric.")
-    }
-    if (! is.character(method)) {
-        stop("Please input method as character.")
     }
 
     if (scale > 3 || scale < 0) {
@@ -33,7 +30,5 @@ Ruul <- function(x, scale = 0, dist = 1, method = "complete") {
         rt <- Ruul.bind(r, r)
     }
 
-    d <- as.dist(r)
-
-    Ruul.hclust(d, method, NULL)
+    as.dist(r)
 }
