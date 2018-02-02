@@ -8,14 +8,7 @@ and based on 谢季坚, 刘承平. 模糊数学方法及其应用[M]. 华中科�
 
 "uul" (pronounced Ah-Goo-La, spelling уул and ᠠᠭᠤᠯᠠ) means "Mountain" in Mongolian.
 
-## Configure ##
-
-The first, source the setting ( Imports: **Rcpp** ):
-
-    export PKG_LIBS=`Rscript -e "Rcpp:::LdFlags()"`
-    export PKG_CXXFLAGS=`Rscript -e "Rcpp:::CxxFlags()"`
-
-The last, build and INSTALL the software:
+## Install ##
 
     R CMD build Ruul && R CMD INSTALL Ruul*.tar.gz
 
