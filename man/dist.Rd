@@ -1,25 +1,17 @@
-\name{Ruul}
-\alias{Ruul}
+\name{Ruul.dist}
+\alias{Ruul.dist}
 \title{
-    Fuzzy Dynamtic Clustering Picture Maker
+    Distance the matrix of data
 }
 \usage{
-Ruul(x, scale = 0, dist = 1)
+Ruul.dist(xstd, dist = 1)
+}
+\description{
+    Distance the matrix of data.
 }
 \arguments{
-    \item{x}{
-        the matrix of data.
-    }
-    \item{scale}{
-        the style to create standard matrix.
-
-        case 0: unchanged
-
-        case 1: zero-mean normalization
-
-        case 2: Min-Max normalization
-
-        case 3: non-liner normalization
+    \item{xstd}{
+        the standard matrix of data.
     }
     \item{dist}{
         the style to create similar matrix.
@@ -57,9 +49,6 @@ Ruul(x, scale = 0, dist = 1)
         case 16: Chebyshev exponent distance similarity
     }
 }
-\description{
-    Fuzzy Dynamtic Clustering Picture Maker.
-}
 \examples{
 x <- matrix( c( 1.24,1.72, 
                1.36,1.74, 
@@ -72,7 +61,9 @@ x <- matrix( c( 1.24,1.72,
                1.56,2.08, 
                1.14,1.78 ), 
             ncol = 2, byrow = TRUE )
-d <- Ruul(x, scale = 1, dist = 12)
+xstd <- Ruul.scale(x, scale = 1)
+d <- Ruul.dist(xstd, dist = 12)
+d <- as.dist(d)
 hc <- hclust(d)
 plot(hc, hang = -1)
 }
