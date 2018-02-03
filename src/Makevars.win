@@ -1,2 +1,4 @@
-PKG_CPPFLAGS =	-I../inst/include/
+RCPP_PATH = `echo 'cat(system.file(package = "Rcpp", mustWork = TRUE))' \
+    | rterm --vanilla --slave`
+PKG_CPPFLAGS =	-I"$(RCPP_PATH)/include/"
 
