@@ -27,8 +27,9 @@ x <- matrix( c( 1.24,1.72,
                1.14,1.78 ), 
             ncol = 2, byrow = TRUE )
 xstd <- Ruul.scale(x, scale = 1)
-d <- Ruul.dist(xstd, dist = 12)
-d <- as.dist(d)
+r <- Ruul.dist(xstd, dist = 12)
+rt <- Ruul.closure(r)
+d <- as.dist(rt)
 hc <- hclust(d)
 plot(hc, hang = -1)
 }
