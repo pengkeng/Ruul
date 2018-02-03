@@ -1,4 +1,4 @@
-`README.md` for version 0.1.0 of Ruul.
+`README.md` for version 0.2.1 of Ruul.
 
 ## What is Ruul? ##
 
