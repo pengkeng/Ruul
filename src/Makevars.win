@@ -1,4 +1,4 @@
 RCPP_PATH = `"$(R_HOME)$(R_ARCH_BIN)/bin/Rscript" -e \
     'cat(system.file(package="Rcpp", mustWork=TRUE))'`
-PKG_CXXFLAGS = -I"$(RCPP_PATH)/include/"
+PKG_CPPFLAGS = -I"$(RCPP_PATH)/include/"
 
