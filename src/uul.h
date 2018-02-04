@@ -19,31 +19,31 @@ extern "C" {
     /**
      * @Synopsis  矩阵的创建
      *
-     * @Param M 矩阵
+     * @Param X 矩阵
      * @Param nrow 矩阵的行数
      * @Param ncol 矩阵的列数
      *
      * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
      */
     /* ----------------------------------------------------------------------------*/
-    extern U_Status U_create (U_MatrixP M, U_Integer nrow, U_Integer ncol);
+    extern U_Status U_create (U_MatrixP X, U_Integer nrow, U_Integer ncol);
 
     /* --------------------------------------------------------------------------*/
     /**
      * @Synopsis  矩阵的销毁
      *
-     * @Param M 矩阵
+     * @Param X 矩阵
      *
      * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
      */
     /* ----------------------------------------------------------------------------*/
-    extern U_Status U_destroy (U_MatrixP M);
+    extern U_Status U_destroy (U_MatrixP X);
 
     /* --------------------------------------------------------------------------*/
     /**
      * @Synopsis  关系矩阵的合成
      *
-     * @Param R 合成的关系矩阵
+     * @Param Rt 合成的关系矩阵
      * @Param R1 输入的关系矩阵R1
      * @Param R2 输入的关系矩阵R2
      *
