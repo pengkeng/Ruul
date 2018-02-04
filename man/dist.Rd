@@ -14,7 +14,7 @@ Ruul.dist(xstd, dist = 1)
         the standard matrix of data.
     }
     \item{dist}{
-        the style to create similar matrix.
+        the option to distance the matrix of data.
 
         case 1: scalar product similarity
 

@@ -14,7 +14,7 @@ Ruul.scale(x, scale = 1)
         the matrix of data.
     }
     \item{scale}{
-        the style to create standard matrix.
+        the option to scale the matrix of data.
 
         case 0: unchanged
 
