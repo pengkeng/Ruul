@@ -12,7 +12,7 @@ Ruul.scale <- function (x, scale = 1) {
         stop("ERROR! scale must be 0, 1, ..., 3.")
     }
 
-    .Call("RScale", x, scale, PACKAGE = "Ruul")
+    .Call("R_scale", x, scale, PACKAGE = "Ruul")
 }
 
 Ruul.dist <- function (xstd, dist = 1) {
@@ -29,7 +29,7 @@ Ruul.dist <- function (xstd, dist = 1) {
         stop("ERROR! dist must be 1, 2, ..., 16.")
     }
 
-    .Call("RDist", xstd, dist, PACKAGE = "Ruul")
+    .Call("R_dist", xstd, dist, PACKAGE = "Ruul")
 }
 
 Ruul.bind <- function (r1, r2) {
@@ -43,7 +43,7 @@ Ruul.bind <- function (r1, r2) {
         stop("Please input r2 as matrix.")
     }
 
-    .Call("RBind", r1, r2, PACKAGE = "Ruul")
+    .Call("R_bind", r1, r2, PACKAGE = "Ruul")
 }
 
 Ruul.closure <- function(r) {

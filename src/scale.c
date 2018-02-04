@@ -47,52 +47,52 @@
  * @Returns   0-矩阵标准化成功，1—矩阵标准化失败，-1—输入数据矩阵存在严重问题
  */
 /* ----------------------------------------------------------------------------*/
-Status Scale (MatrixP Xstd, MatrixP X, Integer opt)
+U_Status U_scale (U_MatrixP Xstd, U_MatrixP X, U_Integer opt)
 {
     if (X->nrow == 0 || X->ncol == 0) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
     if (Xstd->nrow == 0 || Xstd->ncol == 0) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
     if (Xstd->nrow != X->nrow || Xstd->ncol != X->ncol) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
 
 	if (opt == 0) {
-        for (Integer j = 0; j < X->ncol; j++) {
-            for (Integer i = 0; i < X->nrow; i++) {
+        for (U_Integer j = 0; j < X->ncol; j++) {
+            for (U_Integer i = 0; i < X->nrow; i++) {
                 *(*(Xstd->ptr + i) + j) = *(*(X->ptr + i) + j); 
             }
         }
 	}
     else if (opt == 1) {
-		ElemType sk, xk;
+		U_ElemType sk, xk;
 
-		for (Integer j = 0; j < X->ncol; j++) {
+		for (U_Integer j = 0; j < X->ncol; j++) {
 			xk = 0;
-			for (Integer i = 0; i < X->nrow; i++) {
+			for (U_Integer i = 0; i < X->nrow; i++) {
 				xk += *(*(X->ptr + i) + j);
 			}
 			xk /= X->nrow;
 			sk = 0;
-			for (Integer i = 0; i < X->nrow; i++) {
+			for (U_Integer i = 0; i < X->nrow; i++) {
 				sk += pow (*(*(X->ptr + i) + j) - xk, 2);
 			}
 			sk = sqrt (sk / X->nrow);
 			if (sk > 1E-6) {
-				for (Integer i = 0; i < X->nrow; i++) {
+				for (U_Integer i = 0; i < X->nrow; i++) {
 					*(*(Xstd->ptr + i) + j) = (*(*(X->ptr + i) + j) - xk) / sk;
 				}
 			}
 		}
 	} 
     else if (opt == 2) {
-		ElemType xmin, xmax;
+		U_ElemType xmin, xmax;
 
-		for (Integer j = 0; j < X->ncol; j++) {
+		for (U_Integer j = 0; j < X->ncol; j++) {
 			xmin = *(*(X->ptr + j)); xmax = *(*(X->ptr + j));
-			for (Integer i = 0; i < X->nrow; i++) {
+			for (U_Integer i = 0; i < X->nrow; i++) {
 				if (xmin > *(*(X->ptr + i) + j)) {
 					xmin = *(*(X->ptr + i) + j);
 				}
@@ -102,28 +102,28 @@ Status Scale (MatrixP Xstd, MatrixP X, Integer opt)
 			}
 			if (xmax > xmin) {
 				xmax = xmax - xmin;
-				for (Integer i = 0; i < X->nrow; i++) {
+				for (U_Integer i = 0; i < X->nrow; i++) {
 					*(*(Xstd->ptr + i) + j) = (*(*(X->ptr + i) + j) - xmin) / xmax;
 				}
 			} 
             else {
-				for (Integer i = 0; i < X->nrow; i++) {
+				for (U_Integer i = 0; i < X->nrow; i++) {
 					*(*(Xstd->ptr + i) + j) = 0;
 				}
 			}
 		}
 	} 
     else if (opt == 3) {
-        for (Integer j = 0; j < X->ncol; j++) {
-            for (Integer i = 0; i < X->nrow; i++) {
+        for (U_Integer j = 0; j < X->ncol; j++) {
+            for (U_Integer i = 0; i < X->nrow; i++) {
                 *(*(Xstd->ptr + i) + j + 0) = log10 (*(*(Xstd->ptr + i) + j));
             }
         }
     } 
     else {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
 
-    return _SUCCESS_;
+    return U_SUCCESS;
 }
 

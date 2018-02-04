@@ -1,95 +1,105 @@
 #include "uul.h"
 #include "Ruul.h"
 
-void RCopy(Rcpp::NumericMatrix M, MatrixP m)
+using namespace Rcpp;
+
+void U2R_copy(NumericMatrix X, U_MatrixP x)
 {
-    for (Integer i = 0; i < M.nrow(); i++) 
-        for (Integer j = 0; j < M.ncol(); j++)
-            M(i, j) = *(*(m->ptr + i) + j);
+    for (U_Integer i = 0; i < X.nrow(); i++) 
+        for (U_Integer j = 0; j < X.ncol(); j++)
+            X(i, j) = *(*(x->ptr + i) + j);
 }
 
-void RCopy(MatrixP m, Rcpp::NumericMatrix M)
+void R2U_copy(U_MatrixP x, NumericMatrix X)
 {
-    for (Integer i = 0; i < m->nrow; i++) 
-        for (Integer j = 0; j < m->ncol; j++)
-            *(*(m->ptr + i) + j) = M(i, j);
+    for (U_Integer i = 0; i < x->nrow; i++) 
+        for (U_Integer j = 0; j < x->ncol; j++)
+            *(*(x->ptr + i) + j) = X(i, j);
 }
 
 // [[export]]
-SEXP RScale(SEXP _X, SEXP _OPT)
+SEXP R_scale(SEXP _X, SEXP _OPT)
 {
-    Rcpp::NumericMatrix X(_X);
-    Rcpp::NumericMatrix XSTD(X.nrow(), X.ncol());
+    NumericMatrix X(_X);
+    NumericMatrix XSTD(X.nrow(), X.ncol());
 
-    Matrix x, xstd;
-    MatrixP px = &x, pxstd = &xstd;
-    Integer opt = Rcpp::as<Integer> (_OPT);
+    U_MatrixP x, xstd;
+    U_Integer opt = as<U_Integer> (_OPT);
 
-    Create(px, X.nrow(), X.ncol());
-    Create(pxstd, XSTD.nrow(), XSTD.ncol());
+    x = (U_MatrixP) malloc (sizeof (U_Matrix));
+    xstd = (U_MatrixP) malloc (sizeof (U_Matrix));
 
-    RCopy(px, X);
+    U_create(x, X.nrow(), X.ncol());
+    U_create(xstd, XSTD.nrow(), XSTD.ncol());
 
-    Scale(pxstd, px, opt);
+    R2U_copy(x, X);
 
-    RCopy(XSTD, pxstd);
+    U_scale(xstd, x, opt);
 
-    Destroy(px);
-    Destroy(pxstd);
+    U2R_copy(XSTD, xstd);
+
+    U_destroy(x);
+    U_destroy(xstd);
 
     return XSTD;
 }
 
 // [[export]]
-SEXP RDist(SEXP _X, SEXP _OPT)
+SEXP R_dist(SEXP _X, SEXP _OPT)
 {
-    Rcpp::NumericMatrix X(_X);
-    Rcpp::NumericMatrix R(X.nrow(), X.nrow());
+    NumericMatrix X(_X);
+    NumericMatrix R(X.nrow(), X.nrow());
 
-    Matrix x, r;
-    MatrixP px = &x, pr = &r;
-    Integer opt = Rcpp::as<Integer>(_OPT);
+    U_MatrixP x, r;
+    U_Integer opt = as<U_Integer> (_OPT);
 
-    Create(px, X.nrow(), X.ncol());
-    Create(pr, R.nrow(), R.ncol());
+    x = (U_MatrixP) malloc (sizeof (U_Matrix));
+    r = (U_MatrixP) malloc (sizeof (U_Matrix));
 
-    RCopy(px, X);
+    U_create(x, X.nrow(), X.ncol());
+    U_create(r, R.nrow(), R.ncol());
 
-    Dist(pr, px, opt);
+    R2U_copy(x, X);
 
-    RCopy(R, pr);
+    U_dist(r, x, opt);
 
-    Destroy(px);
-    Destroy(pr);
+    U2R_copy(R, r);
+
+    U_destroy(x);
+    U_destroy(r);
 
     return R;
 }
 
 // [[export]]
-SEXP RBind(SEXP _R1, SEXP _R2)
+SEXP R_bind(SEXP _R1, SEXP _R2)
 {
-    Rcpp::NumericMatrix R1(_R1);
-    Rcpp::NumericMatrix R2(_R2);
-    Rcpp::NumericMatrix RT(R1.nrow(), R2.ncol());
+    NumericMatrix R1(_R1);
+    NumericMatrix R2(_R2);
+    NumericMatrix RT(R1.nrow(), R2.ncol());
  
-    Matrix r1, r2, rt;
-    MatrixP pr1 = &r1, pr2 = &r2, prt = &rt;
+    U_MatrixP r1, r2, rt;
 
-    Create(pr1, R1.nrow(), R1.ncol());
-    Create(pr2, R2.nrow(), R2.ncol());
+    r1 = (U_MatrixP) malloc (sizeof (U_Matrix));
+    r2 = (U_MatrixP) malloc (sizeof (U_Matrix));
+    rt = (U_MatrixP) malloc (sizeof (U_Matrix));
 
-    RCopy(pr1, R1);
-    RCopy(pr2, R2);
+    U_create(r1, R1.nrow(), R1.ncol());
+    U_create(r2, R2.nrow(), R2.ncol());
 
-    Create(prt, RT.nrow(), RT.ncol());
+    R2U_copy(r1, R1);
+    R2U_copy(r2, R2);
 
-    Bind(prt, pr1, pr2);
+    U_create(rt, RT.nrow(), RT.ncol());
 
-    RCopy(RT, prt);
+    U_bind(rt, r1, r2);
 
-    Destroy(pr1);
-    Destroy(pr2);
-    Destroy(prt);
+    U2R_copy(RT, rt);
+
+    U_destroy(r1);
+    U_destroy(r2);
+    U_destroy(rt);
 
     return RT;
 }
+

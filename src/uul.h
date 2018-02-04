@@ -26,7 +26,7 @@ extern "C" {
      * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
      */
     /* ----------------------------------------------------------------------------*/
-    extern Status Create (MatrixP M, Integer nrow, Integer ncol);
+    extern U_Status U_create (U_MatrixP M, U_Integer nrow, U_Integer ncol);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -37,7 +37,7 @@ extern "C" {
      * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
      */
     /* ----------------------------------------------------------------------------*/
-    extern Status Destroy (MatrixP M);
+    extern U_Status U_destroy (U_MatrixP M);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -50,7 +50,7 @@ extern "C" {
      * @Returns   0-矩阵合成成功，1-矩阵合成失败
      */
     /* ----------------------------------------------------------------------------*/
-    extern Status Bind (MatrixP Rt, MatrixP R1, MatrixP R2);
+    extern U_Status U_bind (U_MatrixP Rt, U_MatrixP R1, U_MatrixP R2);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -63,7 +63,7 @@ extern "C" {
      * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败，-1—输入数据矩阵存在严重问题
      */
     /* ----------------------------------------------------------------------------*/
-    extern Status Dist (MatrixP R, MatrixP X, Integer opt);
+    extern U_Status U_dist (U_MatrixP R, U_MatrixP X, U_Integer opt);
 
     /* --------------------------------------------------------------------------*/
     /**
@@ -76,7 +76,7 @@ extern "C" {
      * @Returns   0-矩阵标准化成功，1—矩阵标准化失败，-1—输入数据矩阵存在严重问题
      */
     /* ----------------------------------------------------------------------------*/
-    extern Status Scale (MatrixP Xstd, MatrixP X, Integer opt);
+    extern U_Status U_scale (U_MatrixP Xstd, U_MatrixP X, U_Integer opt);
 
 #ifdef __cplusplus
 }

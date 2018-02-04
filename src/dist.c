@@ -134,28 +134,28 @@
  * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败，-1—输入数据矩阵存在严重问题
  */
 /* ----------------------------------------------------------------------------*/
-Status Dist (MatrixP R, MatrixP X, Integer opt)
+U_Status U_dist (U_MatrixP R, U_MatrixP X, U_Integer opt)
 {
     if (X->nrow <= 0 || X->ncol <= 0) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
     if (R->nrow <= 0 || R->ncol <= 0) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
     if (R->nrow != X->nrow || R->ncol != X->nrow) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
 
     if (opt == 1) {
-        ElemType temp;
-        ElemType maxM;
+        U_ElemType temp;
+        U_ElemType maxM;
 
         maxM = 0;
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = 0; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = 0; j < X->nrow; j++) {
                 if (i != j) {
                     temp = 0;
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         temp += *(*(X->ptr + i) + k) * *(*(X->ptr + j) + k);
                     }
                     if (maxM < temp) {
@@ -168,14 +168,14 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
             }
         }
         maxM += 1;
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = 0; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = 0; j < X->nrow; j++) {
                 if (i == j) {
                     *(*(R->ptr + i)+ j) = 1;
                 } 
                 else {
                     *(*(R->ptr + i) + j) = 0;
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         *(*(R->ptr + i)+ j) += *(*(X->ptr + i)+ k) * *(*(X->ptr + j) + k);
                     }
                     *(*(R->ptr + i) + j) /= maxM;
@@ -187,18 +187,18 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
         } 
     } 
     else if (opt == 2) {
-        ElemType xi, xj, s;
+        U_ElemType xi, xj, s;
 
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = 0; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = 0; j < X->nrow; j++) {
                 xi = 0; xj = 0;
-                for (Integer k = 0; k < X->ncol; k++) {
+                for (U_Integer k = 0; k < X->ncol; k++) {
                     xi += *(*(X->ptr + i) + k) * *(*(X->ptr + i) + k);
                     xj += *(*(X->ptr + j) + k) * *(*(X->ptr + j)+ k);
                 }
                 s = sqrt (xi * xj);
                 *(*(R->ptr + i) + j) = 0;
-                for (Integer k = 0; k < X->ncol; k++) {
+                for (U_Integer k = 0; k < X->ncol; k++) {
                     *(*(R->ptr + i) + j) += 
                         *(*(X->ptr + i) + k) * *(*(X->ptr + j) + k);
                 }
@@ -210,26 +210,26 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
         }
     }
     else if (opt == 3) {
-        ElemType xi, xj, s;
-        ElemType xis, xjs;
+        U_ElemType xi, xj, s;
+        U_ElemType xis, xjs;
 
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = 0; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = 0; j < X->nrow; j++) {
                 xi = 0; xj = 0;
-                for (Integer k = 0; k < X->ncol; k++) {
+                for (U_Integer k = 0; k < X->ncol; k++) {
                     xi += *(*(X->ptr + i) + k);
                     xj += *(*(X->ptr + j) + k);
                 }
                 xi /= X->ncol; 
                 xj /= X->ncol;
                 xis = 0; xjs = 0;
-                for (Integer k = 0; k < X->ncol; k++) {
+                for (U_Integer k = 0; k < X->ncol; k++) {
                     xis += pow (*(*(X->ptr + i) + k) - xi, 2);
                     xjs += pow (*(*(X->ptr + j) + k) - xj, 2);
                 }
                 s = sqrt (xis * xjs);
                 *(*(R->ptr + i) + j) = 0;
-                for (Integer k = 0; k < X->ncol; k++) {
+                for (U_Integer k = 0; k < X->ncol; k++) {
                     *(*(R->ptr + i) + j) += 
                         fabs ((*(*(X->ptr + i) + k) - xi) * (*(*(X->ptr + j) + k) - xj));
                 }
@@ -238,20 +238,20 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
         }
     } 
     else if (opt == 4) {
-        ElemType xk, sk;
-        ElemType exponent;
+        U_ElemType xk, sk;
+        U_ElemType exponent;
 
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = 0; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = 0; j < X->nrow; j++) {
                 *(*(R->ptr + i) + j) = 0;
-                for (Integer k = 0; k < X->ncol; k++) {
+                for (U_Integer k = 0; k < X->ncol; k++) {
                     xk= 0;
-                    for (Integer z = 0; z < X->nrow; z++) {
+                    for (U_Integer z = 0; z < X->nrow; z++) {
                         xk += *(*(X->ptr + z) + k);
                     }
                     xk /= X->nrow;
                     sk = 0;
-                    for (Integer z = 0; z < X->nrow; z++) {
+                    for (U_Integer z = 0; z < X->nrow; z++) {
                         sk += pow(*(*(X->ptr + z) + k) - xk, 2);
                     }                    
                     sk /= X->nrow;
@@ -264,15 +264,15 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
         }
     } 
     else if (opt <= 7) {
-        ElemType fz, fm;
+        U_ElemType fz, fm;
 
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = 0; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = 0; j < X->nrow; j++) {
                 fz = 0; 
                 fm = 0;
-                for (Integer k = 0; k < X->ncol; k++) {
+                for (U_Integer k = 0; k < X->ncol; k++) {
                     if (*(*(X->ptr + j) + k) < 0) {
-                        return _ERROR_;
+                        return U_ERROR;
                     }
                     if (*(*(X->ptr + j) + k) < *(*(X->ptr + i) + k)) {
                         fz += *(*(X->ptr + i) + k);
@@ -282,7 +282,7 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
                     }
                 }
                 if (opt == 5) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         if (*(*(X->ptr + i) + k) > *(*(X->ptr + j) + k)) {
                             fm += *(*(X->ptr + i) + k);
                         } 
@@ -292,12 +292,12 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
                     }
                 } 
                 else if (opt == 6) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         fm += (*(*(X->ptr + i) + k) + *(*(X->ptr + j) + k)) / 2;
                     }
                 } 
                 else if (opt == 7) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         fm += sqrt (*(*(X->ptr + i) + k) * *(*(X->ptr + j) + k));
                     }
                 }
@@ -306,26 +306,26 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
         }
     } 
     else if (opt <= 10) {
-        ElemType d;
-        ElemType c;
+        U_ElemType d;
+        U_ElemType c;
 
         c = 0;
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = i + 1; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = i + 1; j < X->nrow; j++) {
                 d = 0;
                 if (opt == 8) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += pow ((*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k)), 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 9) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 10) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }
@@ -337,22 +337,22 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
             }
         }
         c = 1.0 / (1.0 + c);
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = 0; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = 0; j < X->nrow; j++) {
                 d = 0;
                 if (opt == 8) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += pow (*(*(X->ptr + i) + k) -*(*(X->ptr + j) + k) , 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 9) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 10) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }
@@ -363,26 +363,26 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
         }
     } 
     else if (opt <= 13) {
-        ElemType minM;
-        ElemType d;
+        U_ElemType minM;
+        U_ElemType d;
 
         minM = 1E+6;
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = i + 1; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = i + 1; j < X->nrow; j++) {
                 d = 0;
                 if (opt == 11) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += pow (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k), 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 12) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 13) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }
@@ -394,26 +394,26 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
             }
         }
         minM *= 0.9999;
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = 0; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = 0; j < X->nrow; j++) {
                 d = 0;
                 if (i == j) {
                     *(*(R->ptr + i) + j) = 1;
                     continue;
                 }
                 if (opt == 11) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += pow (*(*(X->ptr + i) + k)- *(*(X->ptr + j) + k), 2);
                     }
                     d = sqrt(d);
                 } 
                 else if (opt == 12) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 13) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }
@@ -424,24 +424,24 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
         }
     } 
     else if (opt <= 16) {
-        ElemType d;
+        U_ElemType d;
 
-        for (Integer i = 0; i < X->nrow; i++) {
-            for (Integer j = 0; j < X->nrow; j++) {
+        for (U_Integer i = 0; i < X->nrow; i++) {
+            for (U_Integer j = 0; j < X->nrow; j++) {
                 d = 0;
                 if (opt == 14) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += pow (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k), 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 15) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                     }
                 } 
                 else if (opt == 16) {
-                    for (Integer k = 0; k < X->ncol; k++) {
+                    for (U_Integer k = 0; k < X->ncol; k++) {
                         if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
                             d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
                         }
@@ -452,9 +452,9 @@ Status Dist (MatrixP R, MatrixP X, Integer opt)
         }
     } 
     else {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
 
-    return _SUCCESS_;
+    return U_SUCCESS;
 }
 

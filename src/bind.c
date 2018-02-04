@@ -29,30 +29,30 @@
  * @Returns   0-矩阵合成成功，1-矩阵合成失败
  */
 /* ----------------------------------------------------------------------------*/
-Status Bind (MatrixP Rt, MatrixP R1, MatrixP R2)
+U_Status U_bind (U_MatrixP Rt, U_MatrixP R1, U_MatrixP R2)
 {
     if (R1->nrow <= 0 || R1->ncol <= 0) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
     if (R2->nrow <= 0 || R2->ncol <= 0) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
     if (Rt->nrow <= 0 || Rt->ncol <= 0) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
     if (R1->nrow != R1->ncol || R2->nrow != R2->ncol || Rt->nrow != Rt->ncol) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
     if (Rt->nrow != R1->nrow || Rt->nrow != R2->nrow) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
 
-    ElemType temp;
+    U_ElemType temp;
 
-    for (Integer i = 0; i < R1->nrow; i++) {
-        for (Integer j = 0; j < R2->ncol; j++) {
+    for (U_Integer i = 0; i < R1->nrow; i++) {
+        for (U_Integer j = 0; j < R2->ncol; j++) {
             *(*(Rt->ptr + i)+ j) = 0;
-            for (Integer k = 0; k < R1->ncol; k++) {
+            for (U_Integer k = 0; k < R1->ncol; k++) {
                 temp = *(*(R2->ptr + k)+ j);
                 if (*(*(R1->ptr + i) + k) < temp) {
                     temp = *(*(R1->ptr + i) + k);
@@ -63,6 +63,6 @@ Status Bind (MatrixP Rt, MatrixP R1, MatrixP R2)
             }
         }
     }
-    return _SUCCESS_;
+    return U_SUCCESS;
 }
 

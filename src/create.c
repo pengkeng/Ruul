@@ -11,28 +11,28 @@
  * @Returns   0—矩阵创建成功，1—矩阵创建失败，-2—内存不足
  */
 /* ----------------------------------------------------------------------------*/
-Status Create (MatrixP M, Integer nrow, Integer ncol)
+U_Status U_create (U_MatrixP M, U_Integer nrow, U_Integer ncol)
 {
     if (nrow <= 0 || ncol <= 0) {
-        return _FAILTURE_;
+        return U_FAILTURE;
     }
 
     M->nrow = nrow;
     M->ncol = ncol;
 
-    M->ptr = (ElemTypePP) malloc (sizeof (ElemTypeP) * M->nrow);
+    M->ptr = (U_ElemTypePP) malloc (sizeof (U_ElemTypeP) * M->nrow);
     if (M->ptr == NULL) {
-        return _OVERFLOW_;
+        return U_OVERFLOW;
     }
 
-    for (Integer i = 0; i < M->nrow; i++) {
-        *(M->ptr + i) = (ElemTypeP) malloc (sizeof (ElemType) * M->ncol);
+    for (U_Integer i = 0; i < M->nrow; i++) {
+        *(M->ptr + i) = (U_ElemTypeP) malloc (sizeof (U_ElemType) * M->ncol);
         if (*(M->ptr + i) == NULL) {
-            return _OVERFLOW_;
+            return U_OVERFLOW;
         }
     }
 
-    return _SUCCESS_;
+    return U_SUCCESS;
 }
 
 

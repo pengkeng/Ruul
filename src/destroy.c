@@ -9,12 +9,12 @@
  * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
  **/
 /* ----------------------------------------------------------------------------*/
-Status Destroy (MatrixP M)
+U_Status U_destroy (U_MatrixP M)
 {
-    for (Integer i = 0; i < M->nrow; i++) {
+    for (U_Integer i = 0; i < M->nrow; i++) {
         free (*(M->ptr + i));
     }
     free (M->ptr);
 
-    return _SUCCESS_;
+    return U_SUCCESS;
 }
