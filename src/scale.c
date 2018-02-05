@@ -1,6 +1,6 @@
 /*
  *
- * 设论域$U = {x_{1}, x_{2}, \cdots, x_{n}}$为被分类的对象，
+ * 设论域$uul_ = {x_{1}, x_{2}, \cdots, x_{n}}$为被分类的对象，
  * 每个对象又由m的指标表示其性状，即
  *
  * \begin{center}
@@ -44,55 +44,55 @@
  * @Param X 输入的数据矩阵
  * @Param opt 标准矩阵创建的方法
  *
- * @Returns   0-矩阵标准化成功，1—矩阵标准化失败，-1—输入数据矩阵存在严重问题
+ * @Returns   0-矩阵标准化成功，1—矩阵标准化失败
  */
 /* ----------------------------------------------------------------------------*/
-U_Status U_scale (U_MatrixP Xstd, U_MatrixP X, U_Integer opt)
+uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
 {
     if (X->nrow == 0 || X->ncol == 0) {
-        return U_FAILTURE;
+        return EXIT_FAILURE;
     }
     if (Xstd->nrow == 0 || Xstd->ncol == 0) {
-        return U_FAILTURE;
+        return EXIT_FAILURE;
     }
     if (Xstd->nrow != X->nrow || Xstd->ncol != X->ncol) {
-        return U_FAILTURE;
+        return EXIT_FAILURE;
     }
 
 	if (opt == 0) {
-        for (U_Integer j = 0; j < X->ncol; j++) {
-            for (U_Integer i = 0; i < X->nrow; i++) {
+        for (uul__Integer j = 0; j < X->ncol; j++) {
+            for (uul__Integer i = 0; i < X->nrow; i++) {
                 *(*(Xstd->ptr + i) + j) = *(*(X->ptr + i) + j); 
             }
         }
 	}
     else if (opt == 1) {
-		U_ElemType sk, xk;
+		uul__ElemType sk, xk;
 
-		for (U_Integer j = 0; j < X->ncol; j++) {
+		for (uul__Integer j = 0; j < X->ncol; j++) {
 			xk = 0;
-			for (U_Integer i = 0; i < X->nrow; i++) {
+			for (uul__Integer i = 0; i < X->nrow; i++) {
 				xk += *(*(X->ptr + i) + j);
 			}
 			xk /= X->nrow;
 			sk = 0;
-			for (U_Integer i = 0; i < X->nrow; i++) {
+			for (uul__Integer i = 0; i < X->nrow; i++) {
 				sk += pow (*(*(X->ptr + i) + j) - xk, 2);
 			}
 			sk = sqrt (sk / X->nrow);
 			if (sk > 1E-6) {
-				for (U_Integer i = 0; i < X->nrow; i++) {
+				for (uul__Integer i = 0; i < X->nrow; i++) {
 					*(*(Xstd->ptr + i) + j) = (*(*(X->ptr + i) + j) - xk) / sk;
 				}
 			}
 		}
 	} 
     else if (opt == 2) {
-		U_ElemType xmin, xmax;
+		uul__ElemType xmin, xmax;
 
-		for (U_Integer j = 0; j < X->ncol; j++) {
+		for (uul__Integer j = 0; j < X->ncol; j++) {
 			xmin = *(*(X->ptr + j)); xmax = *(*(X->ptr + j));
-			for (U_Integer i = 0; i < X->nrow; i++) {
+			for (uul__Integer i = 0; i < X->nrow; i++) {
 				if (xmin > *(*(X->ptr + i) + j)) {
 					xmin = *(*(X->ptr + i) + j);
 				}
@@ -102,28 +102,28 @@ U_Status U_scale (U_MatrixP Xstd, U_MatrixP X, U_Integer opt)
 			}
 			if (xmax > xmin) {
 				xmax = xmax - xmin;
-				for (U_Integer i = 0; i < X->nrow; i++) {
+				for (uul__Integer i = 0; i < X->nrow; i++) {
 					*(*(Xstd->ptr + i) + j) = (*(*(X->ptr + i) + j) - xmin) / xmax;
 				}
 			} 
             else {
-				for (U_Integer i = 0; i < X->nrow; i++) {
+				for (uul__Integer i = 0; i < X->nrow; i++) {
 					*(*(Xstd->ptr + i) + j) = 0;
 				}
 			}
 		}
 	} 
     else if (opt == 3) {
-        for (U_Integer j = 0; j < X->ncol; j++) {
-            for (U_Integer i = 0; i < X->nrow; i++) {
+        for (uul__Integer j = 0; j < X->ncol; j++) {
+            for (uul__Integer i = 0; i < X->nrow; i++) {
                 *(*(Xstd->ptr + i) + j + 0) = log10 (*(*(Xstd->ptr + i) + j));
             }
         }
     } 
     else {
-        return U_FAILTURE;
+        return EXIT_FAILURE;
     }
 
-    return U_SUCCESS;
+    return EXIT_SUCCESS;
 }
 

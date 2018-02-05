@@ -22,37 +22,37 @@
 /**
  * @Synopsis  关系矩阵的合成
  *
- * @Param R 合成的关系矩阵
+ * @Param Rt 合成的关系矩阵
  * @Param R1 输入的关系矩阵R1
  * @Param R2 输入的关系矩阵R2
  *
  * @Returns   0-矩阵合成成功，1-矩阵合成失败
  */
 /* ----------------------------------------------------------------------------*/
-U_Status U_bind (U_MatrixP Rt, U_MatrixP R1, U_MatrixP R2)
+uul__Status uul__bind (uul__MatrixP Rt, uul__MatrixP R1, uul__MatrixP R2)
 {
     if (R1->nrow <= 0 || R1->ncol <= 0) {
-        return U_FAILTURE;
+        return EXIT_FAILURE;
     }
     if (R2->nrow <= 0 || R2->ncol <= 0) {
-        return U_FAILTURE;
+        return EXIT_FAILURE;
     }
     if (Rt->nrow <= 0 || Rt->ncol <= 0) {
-        return U_FAILTURE;
+        return EXIT_FAILURE;
     }
     if (R1->nrow != R1->ncol || R2->nrow != R2->ncol || Rt->nrow != Rt->ncol) {
-        return U_FAILTURE;
+        return EXIT_FAILURE;
     }
     if (Rt->nrow != R1->nrow || Rt->nrow != R2->nrow) {
-        return U_FAILTURE;
+        return EXIT_FAILURE;
     }
 
-    U_ElemType temp;
+    uul__ElemType temp;
 
-    for (U_Integer i = 0; i < R1->nrow; i++) {
-        for (U_Integer j = 0; j < R2->ncol; j++) {
+    for (uul__Integer i = 0; i < R1->nrow; i++) {
+        for (uul__Integer j = 0; j < R2->ncol; j++) {
             *(*(Rt->ptr + i)+ j) = 0;
-            for (U_Integer k = 0; k < R1->ncol; k++) {
+            for (uul__Integer k = 0; k < R1->ncol; k++) {
                 temp = *(*(R2->ptr + k)+ j);
                 if (*(*(R1->ptr + i) + k) < temp) {
                     temp = *(*(R1->ptr + i) + k);
@@ -63,6 +63,6 @@ U_Status U_bind (U_MatrixP Rt, U_MatrixP R1, U_MatrixP R2)
             }
         }
     }
-    return U_SUCCESS;
+    return EXIT_SUCCESS;
 }
 
