@@ -1,7 +1,4 @@
 Ruul.scale <- function (x, scale = 1) {
-    if (! requireNamespace("Rcpp", quietly = TRUE)) {
-        stop("Please install Rcpp: install.packages('Rcpp')")
-    }
     if (! is.matrix(x)) {
         stop("Please input x as matrix.")
     }
@@ -14,9 +11,6 @@ Ruul.scale <- function (x, scale = 1) {
 }
 
 Ruul.dist <- function (xstd, dist = 1) {
-    if (! requireNamespace("Rcpp", quietly = TRUE)) {
-        stop("Please install Rcpp: install.packages('Rcpp')")
-    }
     if (! is.matrix(xstd)) {
         stop("Please input x as matrix.")
     }
@@ -29,9 +23,6 @@ Ruul.dist <- function (xstd, dist = 1) {
 }
 
 Ruul.bind <- function (r1, r2) {
-    if (! requireNamespace("Rcpp", quietly = TRUE)) {
-        stop("Please install Rcpp: install.packages('Rcpp')")
-    }
     if (! is.matrix(r1)) {
         stop("Please input r1 as matrix.")
     }

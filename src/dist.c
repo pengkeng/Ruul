@@ -156,7 +156,7 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
                 if (i != j) {
                     temp = 0;
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        temp += *(*(X->ptr + i) + k) * *(*(X->ptr + j) + k);
+                        temp += X->ptr[i + k * X->nrow] * X->ptr[j + k * X->nrow];
                     }
                     if (maxM < temp) {
                         maxM = temp;
@@ -171,16 +171,16 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
         for (uul__Integer i = 0; i < X->nrow; i++) {
             for (uul__Integer j = 0; j < X->nrow; j++) {
                 if (i == j) {
-                    *(*(R->ptr + i)+ j) = 1;
+                    R->ptr[i + j * R->nrow] = 1;
                 } 
                 else {
-                    *(*(R->ptr + i) + j) = 0;
+                    R->ptr[i + j * R->nrow] = 0;
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        *(*(R->ptr + i)+ j) += *(*(X->ptr + i)+ k) * *(*(X->ptr + j) + k);
+                        R->ptr[i + j * R->nrow] += X->ptr[i + k * X->nrow] * X->ptr[j + k * X->nrow];
                     }
-                    *(*(R->ptr + i) + j) /= maxM;
-                    if (*(*(R->ptr + i)+ j) < 0) {
-                        *(*(R->ptr + i) + j) = (*(*(R->ptr + i)+ j) + 1) / 2;
+                    R->ptr[i + j * R->nrow] /= maxM;
+                    if (R->ptr[i + j * R->nrow] < 0) {
+                        R->ptr[i + j * R->nrow] = (R->ptr[i + j * R->nrow] + 1) / 2;
                     }
                 }
             }
@@ -193,18 +193,18 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
             for (uul__Integer j = 0; j < X->nrow; j++) {
                 xi = 0; xj = 0;
                 for (uul__Integer k = 0; k < X->ncol; k++) {
-                    xi += *(*(X->ptr + i) + k) * *(*(X->ptr + i) + k);
-                    xj += *(*(X->ptr + j) + k) * *(*(X->ptr + j)+ k);
+                    xi += X->ptr[i + k * X->nrow] * X->ptr[i + k * X->nrow];
+                    xj += X->ptr[j + k * X->nrow] * X->ptr[j + k * X->ncol];
                 }
                 s = sqrt (xi * xj);
-                *(*(R->ptr + i) + j) = 0;
+                R->ptr[i + j * R->nrow] = 0;
                 for (uul__Integer k = 0; k < X->ncol; k++) {
-                    *(*(R->ptr + i) + j) += 
-                        *(*(X->ptr + i) + k) * *(*(X->ptr + j) + k);
+                    R->ptr[i + j * R->nrow] += 
+                        X->ptr[i + k * X->nrow] * X->ptr[j + k * X->nrow];
                 }
-                *(*(R->ptr + i) + j) /= s;
-                if (*(*(R->ptr + i) + j) <  0) {
-                    *(*(R->ptr + i)+ j) = (*(*(R->ptr + i)+ j) + 1) / 2;
+                R->ptr[i + j * R->nrow] /= s;
+                if (R->ptr[i + j * R->nrow] <  0) {
+                    R->ptr[i * R->nrow + j] = (R->ptr[i + j * R->nrow] + 1) / 2;
                 }
             }
         }
@@ -217,23 +217,23 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
             for (uul__Integer j = 0; j < X->nrow; j++) {
                 xi = 0; xj = 0;
                 for (uul__Integer k = 0; k < X->ncol; k++) {
-                    xi += *(*(X->ptr + i) + k);
-                    xj += *(*(X->ptr + j) + k);
+                    xi += X->ptr[i + k * X->nrow];
+                    xj += X->ptr[j + k * X->nrow];
                 }
                 xi /= X->ncol; 
                 xj /= X->ncol;
                 xis = 0; xjs = 0;
                 for (uul__Integer k = 0; k < X->ncol; k++) {
-                    xis += pow (*(*(X->ptr + i) + k) - xi, 2);
-                    xjs += pow (*(*(X->ptr + j) + k) - xj, 2);
+                    xis += pow (X->ptr[i + k * X->nrow] - xi, 2);
+                    xjs += pow (X->ptr[j + k * X->nrow] - xj, 2);
                 }
                 s = sqrt (xis * xjs);
-                *(*(R->ptr + i) + j) = 0;
+                R->ptr[i + j * R->nrow] = 0;
                 for (uul__Integer k = 0; k < X->ncol; k++) {
-                    *(*(R->ptr + i) + j) += 
-                        fabs ((*(*(X->ptr + i) + k) - xi) * (*(*(X->ptr + j) + k) - xj));
+                    R->ptr[i + j * R->nrow] += 
+                        fabs ((X->ptr[i + k * X->nrow] - xi) * (X->ptr[j + k * X->nrow] - xj));
                 }
-                *(*(R->ptr + i) + j) /= s;
+                R->ptr[i + j * R->nrow] /= s;
             }
         }
     } 
@@ -243,23 +243,23 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
 
         for (uul__Integer i = 0; i < X->nrow; i++) {
             for (uul__Integer j = 0; j < X->nrow; j++) {
-                *(*(R->ptr + i) + j) = 0;
+                R->ptr[i + j * R->nrow] = 0;
                 for (uul__Integer k = 0; k < X->ncol; k++) {
                     xk= 0;
                     for (uul__Integer z = 0; z < X->nrow; z++) {
-                        xk += *(*(X->ptr + z) + k);
+                        xk += X->ptr[z + k * X->nrow];
                     }
                     xk /= X->nrow;
                     sk = 0;
                     for (uul__Integer z = 0; z < X->nrow; z++) {
-                        sk += pow(*(*(X->ptr + z) + k) - xk, 2);
+                        sk += pow(X->ptr[z + k * X->nrow] - xk, 2);
                     }                    
                     sk /= X->nrow;
                     exponent = 
-                        -0.75 * pow (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k), 2) / sk;
-                    *(*(R->ptr + i) + j) += exp (exponent);
+                        -0.75 * pow (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow], 2) / sk;
+                    R->ptr[i + j * R->nrow] += exp (exponent);
                 }
-                *(*(R->ptr + i) + j) /= X->ncol;
+                R->ptr[i + j * R->nrow] /= X->ncol;
             }
         }
     } 
@@ -271,37 +271,37 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
                 fz = 0; 
                 fm = 0;
                 for (uul__Integer k = 0; k < X->ncol; k++) {
-                    if (*(*(X->ptr + j) + k) < 0) {
+                    if (X->ptr[j + k * X->nrow] < 0) {
                         return EXIT_FAILURE;
                     }
-                    if (*(*(X->ptr + j) + k) < *(*(X->ptr + i) + k)) {
-                        fz += *(*(X->ptr + i) + k);
+                    if (X->ptr[j + k * X->nrow] < X->ptr[i + k * X->nrow]) {
+                        fz += X->ptr[i + k * X->nrow];
                     } 
                     else {
-                        fz += *(*(X->ptr + j) + k);
+                        fz += X->ptr[j + k * X->nrow];
                     }
                 }
                 if (opt == 5) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        if (*(*(X->ptr + i) + k) > *(*(X->ptr + j) + k)) {
-                            fm += *(*(X->ptr + i) + k);
+                        if (X->ptr[i + k * X->nrow] > X->ptr[j + k * X->nrow]) {
+                            fm += X->ptr[i + k * X->nrow];
                         } 
                         else {
-                            fm += *(*(X->ptr + j) + k);
+                            fm += X->ptr[j + k * X->nrow];
                         } 
                     }
                 } 
                 else if (opt == 6) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        fm += (*(*(X->ptr + i) + k) + *(*(X->ptr + j) + k)) / 2;
+                        fm += (X->ptr[i + k * X->nrow] + X->ptr[j + k * X->nrow]) / 2;
                     }
                 } 
                 else if (opt == 7) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        fm += sqrt (*(*(X->ptr + i) + k) * *(*(X->ptr + j) + k));
+                        fm += sqrt (X->ptr[i + k * X->nrow] * X->ptr[j + k * X->nrow]);
                     }
                 }
-                *(*(R->ptr + i) + j) = fz / fm;
+                R->ptr[i + j * R->nrow] = fz / fm;
             }
         }
     } 
@@ -315,19 +315,19 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
                 d = 0;
                 if (opt == 8) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += pow ((*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k)), 2);
+                        d += pow ((X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]), 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 9) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        d += fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                     }
                 } 
                 else if (opt == 10) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
-                            d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        if (d < fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow])) {
+                            d = fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                         }
                     }
                 }
@@ -342,23 +342,23 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
                 d = 0;
                 if (opt == 8) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += pow (*(*(X->ptr + i) + k) -*(*(X->ptr + j) + k) , 2);
+                        d += pow (X->ptr[i + k * X->nrow] -X->ptr[j + k * X->nrow] , 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 9) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        d += fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                     }
                 } 
                 else if (opt == 10) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
-                            d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        if (d < fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow])) {
+                            d = fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                         }
                     }
                 }
-                *(*(R->ptr + i) + j) = 1 - c * d;
+                R->ptr[i + j * R->nrow] = 1 - c * d;
             }
         }
     } 
@@ -372,19 +372,19 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
                 d = 0;
                 if (opt == 11) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += pow (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k), 2);
+                        d += pow (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow], 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 12) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        d += fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                     }
                 } 
                 else if (opt == 13) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
-                            d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        if (d < fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow])) {
+                            d = fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                         }
                     }
                 }
@@ -398,28 +398,28 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
             for (uul__Integer j = 0; j < X->nrow; j++) {
                 d = 0;
                 if (i == j) {
-                    *(*(R->ptr + i) + j) = 1;
+                    R->ptr[i + j * R->nrow] = 1;
                     continue;
                 }
                 if (opt == 11) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += pow (*(*(X->ptr + i) + k)- *(*(X->ptr + j) + k), 2);
+                        d += pow (X->ptr[i + k * X->nrow]- X->ptr[j + k * X->nrow], 2);
                     }
                     d = sqrt(d);
                 } 
                 else if (opt == 12) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        d += fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                     }
                 } 
                 else if (opt == 13) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
-                            d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        if (d < fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow])) {
+                            d = fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                         }
                     }
                 }
-                *(*(R->ptr + i) + j) = minM / d;
+                R->ptr[i + j * R->nrow] = minM / d;
             }
         }
     } 
@@ -431,23 +431,23 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
                 d = 0;
                 if (opt == 14) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += pow (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k), 2);
+                        d += pow (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow], 2);
                     }
                     d = sqrt (d);
                 } 
                 else if (opt == 15) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        d += fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        d += fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                     }
                 } 
                 else if (opt == 16) {
                     for (uul__Integer k = 0; k < X->ncol; k++) {
-                        if (d < fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k))) {
-                            d = fabs (*(*(X->ptr + i) + k) - *(*(X->ptr + j) + k));
+                        if (d < fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow])) {
+                            d = fabs (X->ptr[i + k * X->nrow] - X->ptr[j + k * X->nrow]);
                         }
                     }
                 }
-                *(*(R->ptr + i) + j) = exp (-d);
+                R->ptr[i + j * R->nrow] = exp (-d);
             }
         }
     } 

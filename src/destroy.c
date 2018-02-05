@@ -11,10 +11,8 @@
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__destroy (uul__MatrixP X)
 {
-    for (uul__Integer i = 0; i < X->nrow; i++) {
-        free (*(X->ptr + i));
-    }
     free (X->ptr);
 
     return EXIT_SUCCESS;
 }
+

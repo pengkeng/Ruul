@@ -20,19 +20,11 @@ uul__Status uul__create (uul__MatrixP X, uul__Integer nrow, uul__Integer ncol)
     X->nrow = nrow;
     X->ncol = ncol;
 
-    X->ptr = (uul__ElemTypePP) malloc (sizeof (uul__ElemTypeP) * X->nrow);
+    X->ptr = (uul__ElemType *) malloc (sizeof (uul__ElemType) * X->nrow * X->ncol);
     if (X->ptr == NULL) {
         return OVERFLOW;
     }
 
-    for (uul__Integer i = 0; i < X->nrow; i++) {
-        *(X->ptr + i) = (uul__ElemTypeP) malloc (sizeof (uul__ElemType) * X->ncol);
-        if (*(X->ptr + i) == NULL) {
-            return OVERFLOW;
-        }
-    }
-
     return EXIT_SUCCESS;
 }
-
 

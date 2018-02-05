@@ -1,12 +1,12 @@
 #ifndef RUUL_H
 #define RUUL_H
 
-#include "stdafx.h"
-#include "Rstdafx.h"
+#include <R.h>
+#include <Rinternals.h>
 
-RcppExport SEXP Ruul__scale (SEXP X, SEXP OPT);
-RcppExport SEXP Ruul__dist (SEXP X, SEXP OPT);
-RcppExport SEXP Ruul__bind (SEXP R1, SEXP R2);
+extern SEXP Ruul__scale (SEXP X, SEXP OPT);
+extern SEXP Ruul__dist (SEXP X, SEXP OPT);
+extern SEXP Ruul__bind (SEXP R1, SEXP R2);
 
-#endif /*!Ruul.h*/
+#endif /* Ruul.h */
 

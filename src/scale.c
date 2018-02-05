@@ -62,7 +62,7 @@ uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
 	if (opt == 0) {
         for (uul__Integer j = 0; j < X->ncol; j++) {
             for (uul__Integer i = 0; i < X->nrow; i++) {
-                *(*(Xstd->ptr + i) + j) = *(*(X->ptr + i) + j); 
+                Xstd->ptr[i + j * Xstd->nrow] = X->ptr[i + j * X->nrow]; 
             }
         }
 	}
@@ -72,17 +72,17 @@ uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
 		for (uul__Integer j = 0; j < X->ncol; j++) {
 			xk = 0;
 			for (uul__Integer i = 0; i < X->nrow; i++) {
-				xk += *(*(X->ptr + i) + j);
+				xk += X->ptr[i + j * X->nrow];
 			}
 			xk /= X->nrow;
 			sk = 0;
 			for (uul__Integer i = 0; i < X->nrow; i++) {
-				sk += pow (*(*(X->ptr + i) + j) - xk, 2);
+				sk += pow (X->ptr[i + j * X->nrow] - xk, 2);
 			}
 			sk = sqrt (sk / X->nrow);
 			if (sk > 1E-6) {
 				for (uul__Integer i = 0; i < X->nrow; i++) {
-					*(*(Xstd->ptr + i) + j) = (*(*(X->ptr + i) + j) - xk) / sk;
+					Xstd->ptr[i + j * Xstd->nrow] = (X->ptr[i + j * X->nrow] - xk) / sk;
 				}
 			}
 		}
@@ -91,24 +91,24 @@ uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
 		uul__ElemType xmin, xmax;
 
 		for (uul__Integer j = 0; j < X->ncol; j++) {
-			xmin = *(*(X->ptr + j)); xmax = *(*(X->ptr + j));
+			xmin = X->ptr[j + 0 * X->nrow]; xmax = X->ptr[j + 0 * X->nrow];
 			for (uul__Integer i = 0; i < X->nrow; i++) {
-				if (xmin > *(*(X->ptr + i) + j)) {
-					xmin = *(*(X->ptr + i) + j);
+				if (xmin > X->ptr[i + j * X->nrow]) {
+					xmin = X->ptr[i + j * X->nrow];
 				}
-				if (xmax < *(*(X->ptr + i) + j)) {
-					xmax = *(*(X->ptr + i) + j);
+				if (xmax < X->ptr[i + j * X->nrow]) {
+					xmax = X->ptr[i + j * X->nrow];
 				}
 			}
 			if (xmax > xmin) {
 				xmax = xmax - xmin;
 				for (uul__Integer i = 0; i < X->nrow; i++) {
-					*(*(Xstd->ptr + i) + j) = (*(*(X->ptr + i) + j) - xmin) / xmax;
+					Xstd->ptr[i + j * Xstd->nrow] = (X->ptr[i + j * X->nrow] - xmin) / xmax;
 				}
 			} 
             else {
 				for (uul__Integer i = 0; i < X->nrow; i++) {
-					*(*(Xstd->ptr + i) + j) = 0;
+					Xstd->ptr[i + j * Xstd->nrow] = 0;
 				}
 			}
 		}
@@ -116,7 +116,7 @@ uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
     else if (opt == 3) {
         for (uul__Integer j = 0; j < X->ncol; j++) {
             for (uul__Integer i = 0; i < X->nrow; i++) {
-                *(*(Xstd->ptr + i) + j + 0) = log10 (*(*(Xstd->ptr + i) + j));
+                Xstd->ptr[i + j * Xstd->nrow] = log10 (Xstd->ptr[i + j * Xstd->nrow]);
             }
         }
     } 
