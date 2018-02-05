@@ -5,14 +5,12 @@ Ruul.scale <- function (x, scale = 1) {
     if (! is.matrix(x)) {
         stop("Please input x as matrix.")
     }
-    if (! is.numeric(scale)) {
-        stop("Please input scale as numeric.")
-    }
+    scale <- as.integer(scale)
     if (scale > 3 || scale < 0) {
         stop("ERROR! scale must be 0, 1, ..., 3.")
     }
 
-    .Call("R_scale", x, scale, PACKAGE = "Ruul")
+    .Call("Ruul__scale", x, scale, PACKAGE = "Ruul")
 }
 
 Ruul.dist <- function (xstd, dist = 1) {
@@ -22,14 +20,12 @@ Ruul.dist <- function (xstd, dist = 1) {
     if (! is.matrix(xstd)) {
         stop("Please input x as matrix.")
     }
-    if (! is.numeric(dist)) {
-        stop("Please input dist as numeric.")
-    }
+    dist <- as.integer(dist)
     if (dist > 16 || dist < 1) {
         stop("ERROR! dist must be 1, 2, ..., 16.")
     }
 
-    .Call("R_dist", xstd, dist, PACKAGE = "Ruul")
+    .Call("Ruul__dist", xstd, dist, PACKAGE = "Ruul")
 }
 
 Ruul.bind <- function (r1, r2) {
@@ -43,7 +39,7 @@ Ruul.bind <- function (r1, r2) {
         stop("Please input r2 as matrix.")
     }
 
-    .Call("R_bind", r1, r2, PACKAGE = "Ruul")
+    .Call("Ruul__bind", r1, r2, PACKAGE = "Ruul")
 }
 
 Ruul.closure <- function(r) {
