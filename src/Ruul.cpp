@@ -45,8 +45,8 @@ SEXP Ruul__scale (SEXP _X, SEXP _OPT)
 // [[export]]
 SEXP Ruul__dist (SEXP _X, SEXP _OPT)
 {
-    Rcpp::NumericMatrix X (_X);
-    Rcpp::NumericMatrix R (X.nrow(), X.nrow());
+    Rcpp::NumericMatrix X(_X);
+    Rcpp::NumericMatrix R(X.nrow(), X.nrow());
 
     uul__MatrixP x, r;
     uul__Integer opt = *INTEGER (_OPT);
