@@ -21,7 +21,7 @@ extern "C" {
      * @Synopsis  自定义数据类型
      */
     /* ----------------------------------------------------------------------------*/
-    typedef int      uul__Status;      /* 函数的返回结果：运行成功、运行失败、内存不足、输入数据存在严重问题 */
+    typedef int      uul__Status;      /* 函数的返回结果：运行成功、运行失败、内存不足 */
     typedef double   uul__ElemType;    /* 浮点数类型 */
     typedef double  *uul__ElemTypeP;   /* 浮点数指针类型 */
     typedef double **uul__ElemTypePP;  /* 浮点数指针的指针类型 */
