@@ -37,7 +37,7 @@ typedef struct {
  * @Returns   0—矩阵创建成功，1—矩阵创建失败，3—内存不足
  */
 /* ----------------------------------------------------------------------------*/
-extern uul__Status uul__create (uul__Matrix *X, uul__Integer nrow, uul__Integer ncol);
+extern uul__Status uul__create (uul__MatrixP X, uul__Integer nrow, uul__Integer ncol);
 
 /* --------------------------------------------------------------------------*/
 /**
@@ -48,7 +48,7 @@ extern uul__Status uul__create (uul__Matrix *X, uul__Integer nrow, uul__Integer 
  * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
  */
 /* ----------------------------------------------------------------------------*/
-extern uul__Status uul__destroy (uul__Matrix *X);
+extern uul__Status uul__destroy (uul__MatrixP X);
 
 /* --------------------------------------------------------------------------*/
 /**
@@ -61,7 +61,7 @@ extern uul__Status uul__destroy (uul__Matrix *X);
  * @Returns   0-矩阵合成成功，1-矩阵合成失败
  */
 /* ----------------------------------------------------------------------------*/
-extern uul__Status uul__bind (uul__Matrix *Rt, uul__Matrix *R1, uul__Matrix *R2);
+extern uul__Status uul__bind (uul__MatrixP Rt, uul__MatrixP R1, uul__MatrixP R2);
 
 /* --------------------------------------------------------------------------*/
 /**
@@ -74,7 +74,7 @@ extern uul__Status uul__bind (uul__Matrix *Rt, uul__Matrix *R1, uul__Matrix *R2)
  * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败
  */
 /* ----------------------------------------------------------------------------*/
-extern uul__Status uul__dist (uul__Matrix *R, uul__Matrix *X, uul__Integer opt);
+extern uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt);
 
 /* --------------------------------------------------------------------------*/
 /**
@@ -87,6 +87,6 @@ extern uul__Status uul__dist (uul__Matrix *R, uul__Matrix *X, uul__Integer opt);
  * @Returns   0-矩阵标准化成功，1—矩阵标准化失败
  */
 /* ----------------------------------------------------------------------------*/
-extern uul__Status uul__scale (uul__Matrix *Xstd, uul__Matrix *X, uul__Integer opt);
+extern uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt);
 
 #endif /* uul.h */
