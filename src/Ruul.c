@@ -17,6 +17,9 @@ SEXP Ruul__scale (SEXP _X, SEXP _OPT)
 
     uul__scale (Xstd, X, opt);
 
+    free (X);
+    free (Xstd);
+
     return _Xstd;
 }
 
@@ -35,6 +38,9 @@ SEXP Ruul__dist (SEXP _X, SEXP _OPT)
     R->ptr = REAL(_R), R->nrow = Rf_nrows(_R), R->ncol = Rf_ncols(_R);
 
     uul__dist (R, X, opt);
+
+    free (R);
+    free (X);
 
     return _R;
 }
@@ -55,6 +61,10 @@ SEXP Ruul__bind (SEXP _R1, SEXP _R2)
     Rt->ptr = REAL(_Rt), Rt->nrow = Rf_nrows(_Rt), Rt->ncol = Rf_ncols(_Rt);
 
     uul__bind (Rt, R1, R2);
+
+    free (Rt);
+    free (R1);
+    free (R2);
 
     return _Rt;
 }
