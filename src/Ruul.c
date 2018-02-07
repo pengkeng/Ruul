@@ -6,14 +6,16 @@ SEXP Ruul__scale (SEXP _X, SEXP _OPT)
 {
     SEXP _Xstd = Rf_allocMatrix (REALSXP, Rf_nrows(_X), Rf_ncols(_X));
 
-    uul__Matrix  X,       Xstd;
-    uul__MatrixP pX = &X, pXstd = &Xstd;
+    uul__MatrixP  X,       Xstd;
     uul__Integer opt = INTEGER(_OPT)[0];
 
-    pX->ptr = REAL(_X),       pX->nrow = Rf_nrows(_X),       pX->ncol = Rf_ncols(_X);
-    pXstd->ptr = REAL(_Xstd), pXstd->nrow = Rf_nrows(_Xstd), pXstd->ncol = Rf_ncols(_Xstd);
+    X = (uul__MatrixP) malloc (sizeof (uul__Matrix));
+    Xstd = (uul__MatrixP) malloc (sizeof (uul__Matrix));
 
-    uul__scale (pXstd, pX, opt);
+    X->ptr = REAL(_X),       X->nrow = Rf_nrows(_X),       X->ncol = Rf_ncols(_X);
+    Xstd->ptr = REAL(_Xstd), Xstd->nrow = Rf_nrows(_Xstd), Xstd->ncol = Rf_ncols(_Xstd);
+
+    uul__scale (Xstd, X, opt);
 
     return _Xstd;
 }
@@ -23,14 +25,16 @@ SEXP Ruul__dist (SEXP _X, SEXP _OPT)
 {
     SEXP _R = Rf_allocMatrix (REALSXP, Rf_nrows(_X), Rf_nrows(_X));
 
-    uul__Matrix  X,       R;
-    uul__MatrixP pX = &X, pR = &R;
+    uul__MatrixP  X,       R;
     uul__Integer opt = INTEGER(_OPT)[0];
 
-    pX->ptr = REAL(_X), pX->nrow = Rf_nrows(_X), pX->ncol = Rf_ncols(_X);
-    pR->ptr = REAL(_R), pR->nrow = Rf_nrows(_R), pR->ncol = Rf_ncols(_R);
+    X = (uul__MatrixP) malloc (sizeof (uul__Matrix));
+    R = (uul__MatrixP) malloc (sizeof (uul__Matrix));
 
-    uul__dist (pR, pX, opt);
+    X->ptr = REAL(_X), X->nrow = Rf_nrows(_X), X->ncol = Rf_ncols(_X);
+    R->ptr = REAL(_R), R->nrow = Rf_nrows(_R), R->ncol = Rf_ncols(_R);
+
+    uul__dist (R, X, opt);
 
     return _R;
 }
@@ -40,14 +44,17 @@ SEXP Ruul__bind (SEXP _R1, SEXP _R2)
 {
     SEXP _Rt = Rf_allocMatrix (REALSXP, Rf_nrows(_R1), Rf_nrows(_R2));
 
-    uul__Matrix  R1,        R2,        Rt;
-    uul__MatrixP pR1 = &R1, pR2 = &R2, pRt = &Rt;
+    uul__MatrixP R1, R2, Rt;
 
-    pR1->ptr = REAL(_R1), pR1->nrow = Rf_nrows(_R1), pR1->ncol = Rf_ncols(_R1);
-    pR2->ptr = REAL(_R2), pR2->nrow = Rf_nrows(_R2), pR2->ncol = Rf_ncols(_R2);
-    pRt->ptr = REAL(_Rt), pRt->nrow = Rf_nrows(_Rt), pRt->ncol = Rf_ncols(_Rt);
+    R1 = (uul__MatrixP) malloc (sizeof (uul__Matrix));
+    R2 = (uul__MatrixP) malloc (sizeof (uul__Matrix));
+    Rt = (uul__MatrixP) malloc (sizeof (uul__Matrix));
 
-    uul__bind (pRt, pR1, pR2);
+    R1->ptr = REAL(_R1), R1->nrow = Rf_nrows(_R1), R1->ncol = Rf_ncols(_R1);
+    R2->ptr = REAL(_R2), R2->nrow = Rf_nrows(_R2), R2->ncol = Rf_ncols(_R2);
+    Rt->ptr = REAL(_Rt), Rt->nrow = Rf_nrows(_Rt), Rt->ncol = Rf_ncols(_Rt);
+
+    uul__bind (Rt, R1, R2);
 
     return _Rt;
 }
