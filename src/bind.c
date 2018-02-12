@@ -16,6 +16,7 @@
  *
  */
 
+#include <stdlib.h>
 #include "uul.h"
 
 /* --------------------------------------------------------------------------*/
@@ -26,25 +27,25 @@
  * @Param R1 输入的关系矩阵R1
  * @Param R2 输入的关系矩阵R2
  *
- * @Returns   0-矩阵合成成功，1-矩阵合成失败
+ * @Returns   UUL_OK-矩阵合成成功，UUL_ERROR-矩阵合成失败
  */
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__bind (uul__MatrixP Rt, uul__MatrixP R1, uul__MatrixP R2)
 {
     if (R1->nrow <= 0 || R1->ncol <= 0) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
     if (R2->nrow <= 0 || R2->ncol <= 0) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
     if (Rt->nrow <= 0 || Rt->ncol <= 0) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
     if (R1->nrow != R1->ncol || R2->nrow != R2->ncol || Rt->nrow != Rt->ncol) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
     if (Rt->nrow != R1->nrow || Rt->nrow != R2->nrow) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
 
     uul__ElemType temp;
@@ -63,6 +64,6 @@ uul__Status uul__bind (uul__MatrixP Rt, uul__MatrixP R1, uul__MatrixP R2)
             }
         }
     }
-    return EXIT_SUCCESS;
+    return UUL_OK;
 }
 

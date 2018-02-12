@@ -1,3 +1,5 @@
+#include <stdlib.h>
+#include <Rinternals.h>
 #include "uul.h"
 #include "Ruul.h"
 

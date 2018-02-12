@@ -34,6 +34,7 @@
  *
  */
 
+#include <math.h>
 #include "uul.h"
 
 /* --------------------------------------------------------------------------*/
@@ -44,19 +45,19 @@
  * @Param X 输入的数据矩阵
  * @Param opt 标准矩阵创建的方法
  *
- * @Returns   0-矩阵标准化成功，1—矩阵标准化失败
+ * @Returns   UUL_OK-矩阵标准化成功，UUL_ERROR—矩阵标准化失败
  */
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
 {
     if (X->nrow == 0 || X->ncol == 0) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
     if (Xstd->nrow == 0 || Xstd->ncol == 0) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
     if (Xstd->nrow != X->nrow || Xstd->ncol != X->ncol) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
 
 	if (opt == 0) {
@@ -121,9 +122,9 @@ uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
         }
     } 
     else {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
 
-    return EXIT_SUCCESS;
+    return UUL_OK;
 }
 

@@ -121,6 +121,7 @@
  *
  */
 
+#include <math.h>
 #include "uul.h"
 
 /* --------------------------------------------------------------------------*/
@@ -131,19 +132,19 @@
  * @Param X 输入的数据矩阵
  * @Param opt 相似矩阵创建的方法
  *
- * @Returns   0—矩阵闭包创建成功，1—矩阵闭包创建失败
+ * @Returns   UUL_OK—矩阵闭包创建成功，UUL_ERROR—矩阵闭包创建失败
  */
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
 {
     if (X->nrow <= 0 || X->ncol <= 0) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
     if (R->nrow <= 0 || R->ncol <= 0) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
     if (R->nrow != X->nrow || R->ncol != X->nrow) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
 
     if (opt == 1) {
@@ -272,7 +273,7 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
                 fm = 0;
                 for (uul__Integer k = 0; k < X->ncol; k++) {
                     if (X->ptr[j + k * X->nrow] < 0) {
-                        return EXIT_FAILURE;
+                        return UUL_ERROR;
                     }
                     if (X->ptr[j + k * X->nrow] < X->ptr[i + k * X->nrow]) {
                         fz += X->ptr[i + k * X->nrow];
@@ -452,9 +453,9 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
         }
     } 
     else {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
 
-    return EXIT_SUCCESS;
+    return UUL_OK;
 }
 

@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "uul.h"
 
 /* --------------------------------------------------------------------------*/
@@ -6,13 +7,13 @@
  *
  * @Param X 矩阵
  *
- * @Returns   0-矩阵销毁成功，1-矩阵销毁失败
+ * @Returns   UUL_OK-矩阵销毁成功，UUL_ERROR-矩阵销毁失败
  **/
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__destroy (uul__MatrixP X)
 {
     free (X->ptr);
 
-    return EXIT_SUCCESS;
+    return UUL_OK;
 }
 

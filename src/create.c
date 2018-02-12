@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "uul.h"
 
 /* --------------------------------------------------------------------------*/
@@ -8,13 +9,13 @@
  * @Param nrow 矩阵的行数
  * @Param ncol 矩阵的列数
  *
- * @Returns   0—矩阵创建成功，1—矩阵创建失败，3—内存不足
+ * @Returns   UUL_OK—矩阵创建成功，UUL_ERROR—矩阵创建失败
  */
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__create (uul__MatrixP X, uul__Integer nrow, uul__Integer ncol)
 {
     if (nrow <= 0 || ncol <= 0) {
-        return EXIT_FAILURE;
+        return UUL_ERROR;
     }
 
     X->nrow = nrow;
@@ -22,9 +23,9 @@ uul__Status uul__create (uul__MatrixP X, uul__Integer nrow, uul__Integer ncol)
 
     X->ptr = (uul__ElemType *) malloc (sizeof (uul__ElemType) * X->nrow * X->ncol);
     if (X->ptr == NULL) {
-        return OVERFLOW;
+        return UUL_ERROR;
     }
 
-    return EXIT_SUCCESS;
+    return UUL_OK;
 }
 
