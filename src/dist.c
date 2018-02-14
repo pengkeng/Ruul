@@ -1,3 +1,11 @@
+/**
+ * @file dist.c
+ * @Synopsis  相似矩阵的创建
+ * @author Tokhta Horqin
+ * @version 0.2.1
+ * @date 2018-02-14
+ */
+
 /*
  *
  * 设论域

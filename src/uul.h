@@ -2,8 +2,8 @@
  * @file uul.h
  * @Synopsis  模糊矩阵运算
  * @author Tokhta Horqin
- * @version 0.1.0
- * @date 2017-12-25
+ * @version 0.2.1
+ * @date 2018-02-14
  */
 
 #ifndef UUL_H

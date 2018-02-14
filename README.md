@@ -24,6 +24,7 @@ Af and Apf, have been identified on the basis of the front.
 
 After running the code.
 
+    library(Ruul)
     xstd <- Ruul.scale(x, scale = 1)
     r <- Ruul.dist(xstd, dist = 12)
     rt <- Ruul.closure(r)

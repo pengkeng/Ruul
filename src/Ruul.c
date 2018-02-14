@@ -1,9 +1,26 @@
+/**
+ * @file Ruul.c
+ * @Synopsis  模糊矩阵运算
+ * @author Tokhta Horqin
+ * @version 0.2.1
+ * @date 2018-02-14
+ */
+
 #include <stdlib.h>
 #include <Rinternals.h>
 #include "uul.h"
 #include "Ruul.h"
 
-// [[export]]
+/* --------------------------------------------------------------------------*/
+/**
+ * @Synopsis  标准矩阵的创建
+ *
+ * @Param  _X 输入的数据矩阵
+ * @Param  _OPT 标准矩阵创建的方法
+ *
+ * @Returns  创建的标准矩阵
+ */
+/* --------------------------------------------------------------------------*/
 SEXP Ruul__scale (SEXP _X, SEXP _OPT)
 {
     SEXP _Xstd = Rf_allocMatrix (REALSXP, Rf_nrows(_X), Rf_ncols(_X));
@@ -25,7 +42,16 @@ SEXP Ruul__scale (SEXP _X, SEXP _OPT)
     return _Xstd;
 }
 
-// [[export]]
+/* --------------------------------------------------------------------------*/
+/**
+ * @Synopsis  相似矩阵的创建
+ *
+ * @Param  _X 输入的数据矩阵
+ * @Param  _OPT 相似矩阵创建的方法
+ *
+ * @Returns  创建的相似矩阵
+ */
+/* --------------------------------------------------------------------------*/
 SEXP Ruul__dist (SEXP _X, SEXP _OPT)
 {
     SEXP _R = Rf_allocMatrix (REALSXP, Rf_nrows(_X), Rf_nrows(_X));
@@ -47,7 +73,16 @@ SEXP Ruul__dist (SEXP _X, SEXP _OPT)
     return _R;
 }
 
-// [[export]]
+/* --------------------------------------------------------------------------*/
+/**
+ * @Synopsis  关系矩阵的合成
+ *
+ * @Param  _R1 输入的关系矩阵R1
+ * @Param  _R2 输入的关系矩阵R2
+ *
+ * @Returns  合成的关系矩阵
+ */
+/* --------------------------------------------------------------------------*/
 SEXP Ruul__bind (SEXP _R1, SEXP _R2)
 {
     SEXP _Rt = Rf_allocMatrix (REALSXP, Rf_nrows(_R1), Rf_nrows(_R2));

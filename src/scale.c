@@ -1,3 +1,11 @@
+/**
+ * @file scale.c
+ * @Synopsis  标准矩阵的创建
+ * @author Tokhta Horqin
+ * @version 0.2.1
+ * @date 2018-02-14
+ */
+
 /*
  *
  * 设论域$uul_ = {x_{1}, x_{2}, \cdots, x_{n}}$为被分类的对象，
