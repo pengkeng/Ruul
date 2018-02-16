@@ -145,15 +145,15 @@
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
 {
-    if (X->nrow <= 0 || X->ncol <= 0) {
+    if (X->nrow <= 0 || X->ncol <= 0) 
         return UUL_ERROR;
-    }
-    if (R->nrow <= 0 || R->ncol <= 0) {
+    if (R->nrow <= 0 || R->ncol <= 0) 
         return UUL_ERROR;
-    }
-    if (R->nrow != X->nrow || R->ncol != X->nrow) {
+    if (R->nrow != X->nrow || R->ncol != X->nrow) 
         return UUL_ERROR;
-    }
+
+    if (opt < 1 || opt > 16)
+        return UUL_ERROR;
 
     if (opt == 1) {
         uul__ElemType temp;
@@ -432,7 +432,7 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
             }
         }
     } 
-    else if (opt <= 16) {
+    else {
         uul__ElemType d;
 
         for (uul__Integer i = 0; i < X->nrow; i++) {
@@ -460,9 +460,6 @@ uul__Status uul__dist (uul__MatrixP R, uul__MatrixP X, uul__Integer opt)
             }
         }
     } 
-    else {
-        return UUL_ERROR;
-    }
 
     return UUL_OK;
 }

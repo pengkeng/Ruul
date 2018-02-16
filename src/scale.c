@@ -58,15 +58,15 @@
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
 {
-    if (X->nrow == 0 || X->ncol == 0) {
+    if (X->nrow == 0 || X->ncol == 0) 
         return UUL_ERROR;
-    }
-    if (Xstd->nrow == 0 || Xstd->ncol == 0) {
+    if (Xstd->nrow == 0 || Xstd->ncol == 0) 
         return UUL_ERROR;
-    }
-    if (Xstd->nrow != X->nrow || Xstd->ncol != X->ncol) {
+    if (Xstd->nrow != X->nrow || Xstd->ncol != X->ncol) 
         return UUL_ERROR;
-    }
+
+    if (opt < 0 || opt > 3)
+        return UUL_ERROR;
 
 	if (opt == 0) {
         for (uul__Integer j = 0; j < X->ncol; j++) {
@@ -122,16 +122,13 @@ uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
 			}
 		}
 	} 
-    else if (opt == 3) {
+    else {
         for (uul__Integer j = 0; j < X->ncol; j++) {
             for (uul__Integer i = 0; i < X->nrow; i++) {
                 Xstd->ptr[i + j * Xstd->nrow] = log10 (Xstd->ptr[i + j * Xstd->nrow]);
             }
         }
     } 
-    else {
-        return UUL_ERROR;
-    }
 
     return UUL_OK;
 }
