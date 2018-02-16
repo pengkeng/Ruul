@@ -4,16 +4,16 @@
 \alias{Ruul.scale}
 \title{Scale the matrix of data}
 \usage{
-Ruul.scale(x, scale = 1)
+Ruul.scale(x, scale = as.integer(1))
 }
 \arguments{
 \item{x}{the matrix of data}
 
 \item{scale}{the option to scale the matrix of data \cr
-case 0: unchanged \cr
-case 1: zero-mean normalization \cr
-case 2: Min-Max normalization \cr
-case 3: non-liner normalization \cr}
+- case 0: unchanged \cr
+- case 1: zero-mean normalization \cr
+- case 2: Min-Max normalization \cr
+- case 3: non-liner normalization \cr}
 }
 \description{
 Scale the matrix of data
@@ -21,6 +21,6 @@ Scale the matrix of data
 \examples{
 x <- matrix(c(1.24,1.72, 1.36,1.74, 1.38,1.64), 
      nrow = 3, ncol = 2, byrow = TRUE)
-xstd <- Ruul.scale(x, scale = 1)
+xstd <- Ruul.scale(x, scale = as.integer(1))
 xstd
 }
