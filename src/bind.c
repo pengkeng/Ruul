@@ -40,21 +40,16 @@
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__bind (uul__MatrixP Rt, uul__MatrixP R1, uul__MatrixP R2)
 {
-    if (R1->nrow <= 0 || R1->ncol <= 0) {
+    if (R1->nrow <= 0 || R1->ncol <= 0) 
         return UUL_ERROR;
-    }
-    if (R2->nrow <= 0 || R2->ncol <= 0) {
+    if (R2->nrow <= 0 || R2->ncol <= 0) 
         return UUL_ERROR;
-    }
-    if (Rt->nrow <= 0 || Rt->ncol <= 0) {
+    if (Rt->nrow <= 0 || Rt->ncol <= 0) 
         return UUL_ERROR;
-    }
-    if (R1->nrow != R1->ncol || R2->nrow != R2->ncol || Rt->nrow != Rt->ncol) {
+    if (R1->nrow != R1->ncol || R2->nrow != R2->ncol || Rt->nrow != Rt->ncol) 
         return UUL_ERROR;
-    }
-    if (Rt->nrow != R1->nrow || Rt->nrow != R2->nrow) {
+    if (Rt->nrow != R1->nrow || Rt->nrow != R2->nrow) 
         return UUL_ERROR;
-    }
 
     uul__ElemType temp;
 

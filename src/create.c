@@ -22,9 +22,8 @@
 /* ----------------------------------------------------------------------------*/
 uul__Status uul__create (uul__MatrixP X, uul__Integer nrow, uul__Integer ncol)
 {
-    if (nrow <= 0 || ncol <= 0) {
+    if (nrow <= 0 || ncol <= 0) 
         return UUL_ERROR;
-    }
 
     X->nrow = nrow;
     X->ncol = ncol;

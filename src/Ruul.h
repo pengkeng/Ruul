@@ -1,3 +1,11 @@
+/**
+ * @file Ruul.h
+ * @Synopsis  模糊矩阵运算
+ * @author Tokhta Horqin
+ * @version 0.2.1
+ * @date 2018-02-14
+ */
+
 #ifndef RUUL_H
 #define RUUL_H
 
