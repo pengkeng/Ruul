@@ -5,6 +5,6 @@ Author: Tokhta Horqin
 Maintainer: Tokhta Horqin <tokhta@outlook.com>
 Description: Fuzzy Dynamtic Clustering Picture Maker.
 Depends: R (>= 3.0.0)
-License: GPL (>= 2)
+License: MIT + file LICENSE
 NeedsCompilation: yes
 RoxygenNote: 6.0.1
