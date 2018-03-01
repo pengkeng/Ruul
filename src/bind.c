@@ -51,18 +51,19 @@ uul__Status uul__bind (uul__MatrixP Rt, uul__MatrixP R1, uul__MatrixP R2)
     if (Rt->nrow != R1->nrow || Rt->nrow != R2->nrow) 
         return UUL_ERROR;
 
-    uul__ElemType temp;
+    uul__Integer i, j, k;
+    uul__ElemType t;
 
-    for (uul__Integer i = 0; i < R1->nrow; i++) {
-        for (uul__Integer j = 0; j < R2->ncol; j++) {
+    for (i = 0; i < R1->nrow; i++) {
+        for (j = 0; j < R2->ncol; j++) {
             Rt->ptr[i + j * R1->nrow] = 0;
-            for (uul__Integer k = 0; k < R1->ncol; k++) {
-                temp = R2->ptr[k + j * R2->nrow];
-                if (R1->ptr[i + k * R1->nrow] < temp) {
-                    temp = R1->ptr[i + k * R1->nrow];
+            for (k = 0; k < R1->ncol; k++) {
+                t = R2->ptr[k + j * R2->nrow];
+                if (R1->ptr[i + k * R1->nrow] < t) {
+                    t = R1->ptr[i + k * R1->nrow];
                 }
-                if (Rt->ptr[i + j * Rt->nrow] < temp) {
-                    Rt->ptr[i + j * Rt->nrow] = temp;
+                if (Rt->ptr[i + j * Rt->nrow] < t) {
+                    Rt->ptr[i + j * Rt->nrow] = t;
                 }
             }
         }

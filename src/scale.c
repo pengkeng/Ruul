@@ -68,40 +68,40 @@ uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
     if (opt < 0 || opt > 3)
         return UUL_ERROR;
 
+    uul__Integer i, j;
+    uul__ElemType xk, sk;
+    uul__ElemType xmin, xmax;
+
 	if (opt == 0) {
-        for (uul__Integer j = 0; j < X->ncol; j++) {
-            for (uul__Integer i = 0; i < X->nrow; i++) {
+        for (j = 0; j < X->ncol; j++) {
+            for (i = 0; i < X->nrow; i++) {
                 Xstd->ptr[i + j * Xstd->nrow] = X->ptr[i + j * X->nrow]; 
             }
         }
 	}
     else if (opt == 1) {
-		uul__ElemType sk, xk;
-
-		for (uul__Integer j = 0; j < X->ncol; j++) {
+		for (j = 0; j < X->ncol; j++) {
 			xk = 0;
-			for (uul__Integer i = 0; i < X->nrow; i++) {
+			for (i = 0; i < X->nrow; i++) {
 				xk += X->ptr[i + j * X->nrow];
 			}
 			xk /= X->nrow;
 			sk = 0;
-			for (uul__Integer i = 0; i < X->nrow; i++) {
+			for (i = 0; i < X->nrow; i++) {
 				sk += pow (X->ptr[i + j * X->nrow] - xk, 2);
 			}
 			sk = sqrt (sk / X->nrow);
 			if (sk > 1E-6) {
-				for (uul__Integer i = 0; i < X->nrow; i++) {
+				for (i = 0; i < X->nrow; i++) {
 					Xstd->ptr[i + j * Xstd->nrow] = (X->ptr[i + j * X->nrow] - xk) / sk;
 				}
 			}
 		}
 	} 
     else if (opt == 2) {
-		uul__ElemType xmin, xmax;
-
-		for (uul__Integer j = 0; j < X->ncol; j++) {
+		for (j = 0; j < X->ncol; j++) {
 			xmin = X->ptr[j + 0 * X->nrow]; xmax = X->ptr[j + 0 * X->nrow];
-			for (uul__Integer i = 0; i < X->nrow; i++) {
+			for (i = 0; i < X->nrow; i++) {
 				if (xmin > X->ptr[i + j * X->nrow]) {
 					xmin = X->ptr[i + j * X->nrow];
 				}
@@ -111,20 +111,20 @@ uul__Status uul__scale (uul__MatrixP Xstd, uul__MatrixP X, uul__Integer opt)
 			}
 			if (xmax > xmin) {
 				xmax = xmax - xmin;
-				for (uul__Integer i = 0; i < X->nrow; i++) {
+				for (i = 0; i < X->nrow; i++) {
 					Xstd->ptr[i + j * Xstd->nrow] = (X->ptr[i + j * X->nrow] - xmin) / xmax;
 				}
 			} 
             else {
-				for (uul__Integer i = 0; i < X->nrow; i++) {
+				for (i = 0; i < X->nrow; i++) {
 					Xstd->ptr[i + j * Xstd->nrow] = 0;
 				}
 			}
 		}
 	} 
     else {
-        for (uul__Integer j = 0; j < X->ncol; j++) {
-            for (uul__Integer i = 0; i < X->nrow; i++) {
+        for (j = 0; j < X->ncol; j++) {
+            for (i = 0; i < X->nrow; i++) {
                 Xstd->ptr[i + j * Xstd->nrow] = log10 (Xstd->ptr[i + j * Xstd->nrow]);
             }
         }
