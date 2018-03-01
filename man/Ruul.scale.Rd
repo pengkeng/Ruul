@@ -4,7 +4,7 @@
 \alias{Ruul.scale}
 \title{Scale the matrix of data}
 \usage{
-Ruul.scale(x, scale = as.integer(1))
+Ruul.scale(x, scale = 1)
 }
 \arguments{
 \item{x}{the matrix of data}
@@ -21,6 +21,6 @@ Scale the matrix of data
 \examples{
 x <- matrix(c(1.24,1.72, 1.36,1.74, 1.38,1.64), 
      nrow = 3, ncol = 2, byrow = TRUE)
-xstd <- Ruul.scale(x, scale = as.integer(1))
+xstd <- Ruul.scale(x, scale = 1)
 xstd
 }

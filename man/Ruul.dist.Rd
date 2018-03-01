@@ -4,7 +4,7 @@
 \alias{Ruul.dist}
 \title{Distance the matrix of data}
 \usage{
-Ruul.dist(xstd, dist = as.integer(1))
+Ruul.dist(xstd, dist = 1)
 }
 \arguments{
 \item{xstd}{the standard matrix of data}
@@ -33,6 +33,6 @@ Distance the matrix of data
 \examples{
 xstd <- matrix(c(1.00,0.81,0.79, 0.81,1.00,0.82, 0.79,0.82,1.00), 
      nrow = 3, ncol = 3, byrow = TRUE)
-r <- Ruul.dist(xstd, dist = as.integer(1))
+r <- Ruul.dist(xstd, dist = 1)
 r
 }

@@ -11,22 +11,19 @@
 #' @examples
 #' x <- matrix(c(1.24,1.72, 1.36,1.74, 1.38,1.64), 
 #'      nrow = 3, ncol = 2, byrow = TRUE)
-#' xstd <- Ruul.scale(x, scale = as.integer(1))
+#' xstd <- Ruul.scale(x, scale = 1)
 #' xstd
-Ruul.scale <- function (x, scale = as.integer(1)) {
+Ruul.scale <- function (x, scale = 1) {
     if (! is.matrix(x)) {
         stop("Please input x as matrix.")
-    }
-    if (any(is.na(x))) {
-        stop("ERROR! any elements in x must be not NA.")
+    } else if (any(is.na(x))) {
+        stop("ERROR! Any elements in x must be not NA.")
     }
 
-    if (! is.integer(scale)) {
-        stop("please input scale as integer.")
-    }
+    scale <- as.integer(scale);
     if (is.na(scale)) {
         stop("ERROR! scale must be not NA.")
-    } else if (scale > as.integer(3) || scale < as.integer(0)) {
+    } else if (scale > 3 || scale < 0) {
         stop("ERROR! scale must be 0, 1, ..., 3.")
     }
 
@@ -58,22 +55,19 @@ Ruul.scale <- function (x, scale = as.integer(1)) {
 #' @examples
 #' xstd <- matrix(c(1.00,0.81,0.79, 0.81,1.00,0.82, 0.79,0.82,1.00), 
 #'      nrow = 3, ncol = 3, byrow = TRUE)
-#' r <- Ruul.dist(xstd, dist = as.integer(1))
+#' r <- Ruul.dist(xstd, dist = 1)
 #' r
-Ruul.dist <- function (xstd, dist = as.integer(1)) {
+Ruul.dist <- function (xstd, dist = 1) {
     if (! is.matrix(xstd)) {
         stop("Please input xstd as matrix.")
-    }
-    if (any(is.na(xstd))) {
-        stop("ERROR! any elements in xstd must be not NA.")
+    } else if (any(is.na(xstd))) {
+        stop("ERROR! Any elements in xstd must be not NA.")
     }
 
-    if (! is.integer(dist)) {
-        stop("please input dist as integer.")
-    }
+    dist <- as.integer(dist)
     if (is.na(dist)) {
         stop("ERROR! dist must not be NA")
-    } else if (dist > as.integer(16) || dist < as.integer(1)) {
+    } else if (dist > 16 || dist < 1) {
         stop("ERROR! dist must be 1, 2, ..., 16.")
     }
 
@@ -96,16 +90,14 @@ Ruul.dist <- function (xstd, dist = as.integer(1)) {
 Ruul.bind <- function (r1, r2) {
     if (! is.matrix(r1)) {
         stop("Please input r1 as matrix.")
-    }
-    if (any(is.na(r1))) {
-        stop("ERROR! any elements in r1 must be not NA.")
+    } else if (any(is.na(r1))) {
+        stop("ERROR! Any elements in r1 must be not NA.")
     }
 
     if (! is.matrix(r2)) {
         stop("Please input r2 as matrix.")
-    }
-    if (any(is.na(r2))) {
-        stop("ERROR! any elements in r2 must be not NA.")
+    } else if (any(is.na(r2))) {
+        stop("ERROR! Any elements in r2 must be not NA.")
     }
 
     .Call("Ruul__bind", r1, r2, PACKAGE = "Ruul")
@@ -124,13 +116,12 @@ Ruul.bind <- function (r1, r2) {
 Ruul.closure <- function(r) {
     if (! is.matrix(r)) {
         stop("Please input r as matrix.")
-    }
-    if (any(is.na(r))) {
-        stop("ERROR! any elements in r must be not NA.")
+    } else if (any(is.na(r))) {
+        stop("ERROR! Any elements in r must be not NA.")
     }
 
     rt <- Ruul.bind(r, r)
-    while (! all(abs(r - rt) < 1E-4)) {  
+    while (! all(abs(r - rt) < 1E-6)) {  
         r  <- rt
         rt <- Ruul.bind(r, r)
     }
