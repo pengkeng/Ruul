@@ -25,9 +25,9 @@ Af and Apf, have been identified on the basis of the front.
 After running the code.
 
     library(Ruul)
-    xstd <- Ruul.scale(x, scale = 1)
-    r <- Ruul.dist(xstd, dist = 12)
-    rt <- Ruul.closure(r)
+    xstd <- Ruul_scale(x, scale = 1)
+    r <- Ruul_dist(xstd, dist = 12)
+    rt <- Ruul_closure(r)
     d <- as.dist(rt)
     hc <- hclust(d)
     plot(hc, hang = -1, sub = "", xlab = "No.")

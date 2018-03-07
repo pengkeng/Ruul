@@ -11,9 +11,9 @@
 #' @examples
 #' x <- matrix(c(1.24,1.72, 1.36,1.74, 1.38,1.64), 
 #'      nrow = 3, ncol = 2, byrow = TRUE)
-#' xstd <- Ruul.scale(x, scale = 1)
+#' xstd <- Ruul_scale(x, scale = 1)
 #' xstd
-Ruul.scale <- function (x, scale = 1) {
+Ruul_scale <- function (x, scale = 1) {
     if (! is.matrix(x)) {
         stop("Please input x as matrix.")
     } else if (any(is.na(x))) {
@@ -55,9 +55,9 @@ Ruul.scale <- function (x, scale = 1) {
 #' @examples
 #' xstd <- matrix(c(1.00,0.81,0.79, 0.81,1.00,0.82, 0.79,0.82,1.00), 
 #'      nrow = 3, ncol = 3, byrow = TRUE)
-#' r <- Ruul.dist(xstd, dist = 1)
+#' r <- Ruul_dist(xstd, dist = 1)
 #' r
-Ruul.dist <- function (xstd, dist = 1) {
+Ruul_dist <- function (xstd, dist = 1) {
     if (! is.matrix(xstd)) {
         stop("Please input xstd as matrix.")
     } else if (any(is.na(xstd))) {
@@ -85,9 +85,9 @@ Ruul.dist <- function (xstd, dist = 1) {
 ##      nrow = 3, ncol = 3, byrow = TRUE)
 ## r2 <- matrix(c(1.00,0.76,0.78, 0.76,1.00,0.84, 0.78,0.84,1.00), 
 ##      nrow = 3, ncol = 3, byrow = TRUE)
-## rt <- Ruul.bind(r1, r2)
+## rt <- Ruul_bind(r1, r2)
 ## rt
-Ruul.bind <- function (r1, r2) {
+Ruul_bind <- function (r1, r2) {
     if (! is.matrix(r1)) {
         stop("Please input r1 as matrix.")
     } else if (any(is.na(r1))) {
@@ -111,19 +111,19 @@ Ruul.bind <- function (r1, r2) {
 #' @examples
 #' r <- matrix(c(1.00,0.69,0.68, 0.69,1.00,0.69, 0.68,0.69,1.00), 
 #'      nrow = 3, ncol = 3, byrow = TRUE)
-#' rt <- Ruul.closure(r)
+#' rt <- Ruul_closure(r)
 #' rt
-Ruul.closure <- function(r) {
+Ruul_closure <- function(r) {
     if (! is.matrix(r)) {
         stop("Please input r as matrix.")
     } else if (any(is.na(r))) {
         stop("ERROR! Any elements in r must be not NA.")
     }
 
-    rt <- Ruul.bind(r, r)
+    rt <- Ruul_bind(r, r)
     while (! all(abs(r - rt) < 1E-6)) {  
         r  <- rt
-        rt <- Ruul.bind(r, r)
+        rt <- Ruul_bind(r, r)
     }
 
     return(rt)
