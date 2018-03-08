@@ -34,12 +34,15 @@ SEXP Ruul__scale (SEXP _X, SEXP _OPT)
     X->ptr = REAL(_X),       X->nrow = Rf_nrows(_X),       X->ncol = Rf_ncols(_X);
     Xstd->ptr = REAL(_Xstd), Xstd->nrow = Rf_nrows(_Xstd), Xstd->ncol = Rf_ncols(_Xstd);
 
-    uul__scale (Xstd, X, opt);
+    uul__Integer result = uul__scale (Xstd, X, opt);
 
     free (X);
     free (Xstd);
 
-    return _Xstd;
+    if (result == UUL_OK)
+        return _Xstd;
+    else 
+        Rprintf ("scale failed!\n");
 }
 
 /* --------------------------------------------------------------------------*/
@@ -65,12 +68,15 @@ SEXP Ruul__dist (SEXP _X, SEXP _OPT)
     X->ptr = REAL(_X), X->nrow = Rf_nrows(_X), X->ncol = Rf_ncols(_X);
     R->ptr = REAL(_R), R->nrow = Rf_nrows(_R), R->ncol = Rf_ncols(_R);
 
-    uul__dist (R, X, opt);
+    uul__Integer result = uul__dist (R, X, opt);
 
     free (R);
     free (X);
-
-    return _R;
+    
+    if (result == UUL_OK)
+        return _R;
+    else 
+        Rprintf ("dist failed!\n");
 }
 
 /* --------------------------------------------------------------------------*/
@@ -97,12 +103,15 @@ SEXP Ruul__bind (SEXP _R1, SEXP _R2)
     R2->ptr = REAL(_R2), R2->nrow = Rf_nrows(_R2), R2->ncol = Rf_ncols(_R2);
     Rt->ptr = REAL(_Rt), Rt->nrow = Rf_nrows(_Rt), Rt->ncol = Rf_ncols(_Rt);
 
-    uul__bind (Rt, R1, R2);
+    uul__Integer result = uul__bind (Rt, R1, R2);
 
     free (Rt);
     free (R1);
     free (R2);
 
-    return _Rt;
+    if (result == UUL_OK)
+        return _Rt;
+    else 
+        Rprintf ("bind failed!\n");
 }
 
