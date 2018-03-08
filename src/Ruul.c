@@ -39,10 +39,10 @@ SEXP Ruul__scale (SEXP _X, SEXP _OPT)
     free (X);
     free (Xstd);
 
-    if (result == UUL_OK)
-        return _Xstd;
-    else 
+    if (result == UUL_ERROR)
         Rprintf ("scale failed!\n");
+    
+    return _Xstd;
 }
 
 /* --------------------------------------------------------------------------*/
@@ -73,10 +73,10 @@ SEXP Ruul__dist (SEXP _X, SEXP _OPT)
     free (R);
     free (X);
     
-    if (result == UUL_OK)
-        return _R;
-    else 
+    if (result == UUL_ERROR)
         Rprintf ("dist failed!\n");
+
+    return _R;
 }
 
 /* --------------------------------------------------------------------------*/
@@ -110,8 +110,8 @@ SEXP Ruul__bind (SEXP _R1, SEXP _R2)
     free (R2);
 
     if (result == UUL_OK)
-        return _Rt;
-    else 
         Rprintf ("bind failed!\n");
+
+    return _Rt;
 }
 
