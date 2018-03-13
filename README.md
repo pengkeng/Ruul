@@ -38,7 +38,7 @@ Here is output about classifying.
 
 ## License ##
 
-Ruul is free software distributed under the terms of GPL.
+Ruul is free software distributed under the terms of MIT LICENSE.
 
 ## Information ##
 
