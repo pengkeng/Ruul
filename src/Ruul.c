@@ -109,7 +109,7 @@ SEXP Ruul__bind (SEXP _R1, SEXP _R2)
     free (R1);
     free (R2);
 
-    if (result == UUL_OK)
+    if (result == UUL_ERROR)
         Rprintf ("bind failed!\n");
 
     return _Rt;
